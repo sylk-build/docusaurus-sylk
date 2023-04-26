@@ -1,0 +1,36 @@
+{
+  "name": "docusaurus-sylk-plugin",
+  "version": "1.0.0",
+  "description": "Sylk documentation plugin for Docusaurus",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylk-build/docusaurus-plugin-sylk.git"
+  },
+  "keywords": [
+    "docusaurus"
+  ],
+  "author": "Amit Shmulevitch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sylk-build/docusaurus-plugin-sylk/issues"
+  },
+  "homepage": "https://github.com/sylk-build/docusaurus-plugin-sylk#readme",
+  "dependencies": {
+    "@docusaurus/utils": "^2.4.0",
+    "@grpc/grpc-js": "^1.8.14",
+    "clsx": "^1.2.1",
+    "rxjs": "^7.8.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^2.4.0",
+    "@docusaurus/types": "^2.4.0",
+    "@tsconfig/docusaurus": "^1.0.7",
+    "@types/node": "^18.16.1",
+    "typescript": "^5.0.4"
+  }
+}

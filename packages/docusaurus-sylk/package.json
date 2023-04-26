@@ -1,0 +1,31 @@
+{
+    "name": "docusaurus-sylk",
+    "version": "0.3.3",
+    "description": "Sylk documentation toolset for Docusaurus",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/sylk-build/docusaurus-sylk.git"
+    },
+    "homepage": "https://github.com/sylk-build/docusaurus-sylk/tree/master/packages/docusaurus-sylk",
+    "keywords": [
+      "docusaurus",
+      "protobuf",
+      "documentation",
+      "api",
+      "protocol buffers",
+      "grpc",
+      "microservices",
+      "markdown",
+      "mdx"
+    ],
+    "main": "dist/index.js",
+    "scripts": {
+      "build": "tsc",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Amit Shmulevitch",
+    "license": "ISC",
+    "devDependencies": {
+      "@docusaurus/types": "^2.4.0"
+    }
+  }
