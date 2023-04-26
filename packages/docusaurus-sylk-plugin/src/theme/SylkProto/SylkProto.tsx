@@ -4,6 +4,8 @@ import { Enum, ResourceDescriptor, Message, MessageField, Service, ServiceMethod
 import { SylkMessage } from '../../sylk/protos/SylkMessage';
 import { SylkField, SylkFieldLabels, sylkFieldTypesToJSON } from '../../sylk/protos/SylkField';
 import { SylkFieldTypes } from '../../sylk/protos/SylkField';
+import { SylkMethod } from '../../sylk/protos/SylkMethod';
+import { SylkService } from '../../sylk/protos/SylkService';
 interface ComponentProps {
     id?: string;
     children?:string;
@@ -38,14 +40,28 @@ interface MessageFieldsProps {
     packageDep:string[];
 }
 
-const parseNestedTypeLink = (nestedType:string,dependencies:string[]):string => {
+interface ServiceProps {
+  service: SylkService;
+}
+
+interface ServiceMethodProps {
+  method: SylkMethod;
+  dependencies: string[];
+}
+
+interface ServiceMethodsProps {
+  methods: SylkMethod[];
+  dependencies: string[];
+}
+
+const parseNestedTypeLink = (nestedType:string,dependencies:string[],fromService:boolean = false):string => {
   const wellKnownTypes = `https://protobuf.dev/reference/protobuf/google.protobuf/#`
 
   let preNav = ''
   let link = ''
   console.log(dependencies)
   if(dependencies.includes(nestedType.split('.').slice(0,3).join('.'))) {
-    preNav = `../${nestedType.split('.')[1]}/${nestedType.split('.')[2]}`
+    preNav = fromService?`../../packages/${nestedType.split('.')[1]}/${nestedType.split('.')[2]}`:`../${nestedType.split('.')[1]}/${nestedType.split('.')[2]}`
   } 
   if (nestedType.includes('google.protobuf.')) {
     link = wellKnownTypes+nestedType.split('.').pop()?.toLocaleLowerCase()
@@ -53,6 +69,58 @@ const parseNestedTypeLink = (nestedType:string,dependencies:string[]):string => 
     link = preNav+'#'+nestedType.split('.').join('').toLocaleLowerCase()
   }
   return link
+}
+
+export const SylkMethodProto = ({ method, dependencies }: ServiceMethodProps) => (
+  <table>
+    <tbody>
+      <tr>
+        <th style={leftHeaderStyles}>Method</th>
+        <td><code>{method.name}</code></td>
+      </tr>
+      <tr>
+        <th style={leftHeaderStyles}>Request</th>
+        <td>
+          <Link to={parseNestedTypeLink(method.inputType,dependencies,true)}><code>{method.inputType}</code></Link>
+          {method.clientStreaming === true ? ' stream' : ''}
+        </td>
+      </tr>
+      <tr>
+        <th style={leftHeaderStyles}>Response</th>
+        <td>
+          <Link to={parseNestedTypeLink(method.outputType,dependencies,true)}><code>{method.outputType}</code></Link>
+          {method.serverStreaming === true ? ' stream' : ''}
+        </td>
+      </tr>
+      <tr>
+        <th style={leftHeaderStyles}>Description</th>
+        <td>{method.description}</td>
+      </tr>
+    </tbody>
+  </table>
+)
+
+export const SylkMethodsProto = (props: ServiceMethodsProps) => {
+  const { methods, dependencies } = props;
+
+  return (
+    <>
+      {methods.map((method, i) => (
+        <SylkMethodProto dependencies={dependencies} method={method} key={`${method.name}-${i}`} />
+      ))}
+    </>
+  );
+}
+
+export const ProtoService = (props: ServiceProps) => {
+  const { service } = props;
+
+  return (
+    <>
+      <p style={{ whiteSpace: 'pre-wrap' }}>{service.description}</p>
+      <SylkMethodsProto dependencies={service.dependencies} methods={service.methods} />
+    </>
+  )
 }
 
 const SylkProtoMessageFields = (props: MessageFieldsProps) => {

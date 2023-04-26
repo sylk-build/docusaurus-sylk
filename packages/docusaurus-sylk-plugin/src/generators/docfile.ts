@@ -104,9 +104,14 @@ const generateDocServiceContents = (serviceDescriptor: SylkService): string => {
 title: ${getVersionFileName(serviceDescriptor.fullName)}
 hide_title: true
 ---
+import { SylkMethodsProto } from '@theme/SylkProto/SylkProto';
 
 # \`${getLeafFileName(serviceDescriptor.name)}\`
-_**Full Name** ${serviceDescriptor.fullName}`
+
+**Full Name** ${serviceDescriptor.fullName}
+
+<SylkMethodsProto dependencies={${JSON.stringify(serviceDescriptor.dependencies)}} methods={${JSON.stringify(serviceDescriptor.methods)}} />
+`
   )
 }
 
@@ -118,7 +123,6 @@ title: ${getVersionFileName(fileDescriptor.package)}
 hide_title: true
 ---
 import { SylkMessageProto, SylkEnumProto } from '@theme/SylkProto/SylkProto';
-// import { ProtoMessage, ProtoServiceMethod, ProtoEnum } from '@theme/SylkProject';
 
 # \`${getLeafFileName(fileDescriptor.name)}\`
 _**path** ${fileDescriptor.name}_

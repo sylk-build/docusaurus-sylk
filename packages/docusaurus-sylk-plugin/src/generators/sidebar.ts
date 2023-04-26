@@ -115,14 +115,13 @@ const compactFileDirectory = (fileDir: FileDirectory) => {
 const convertDirectoryToSidebar = (fileDir: FileDirectory,apiName:string) => {
   // construct category
   const nestedResourceType = fileDir.files ? fileDir.files[0].resourceDescriptor?.resource.type : 'sylkRoot'
-  console.log(fileDir.files?.map(f => f.resourceDescriptor?.resource.fullName?.split('.').pop()?.split('v')[1]))
+  // console.log(fileDir.files?.map(f => f.resourceDescriptor?.resource.fullName?.split('.').pop()?.split('v')[1]))
   const sidebarItem: SidebarItem = {
     type: 'category',
     label: fileDir.name,
   }
   
   if(nestedResourceType !== 'sylkRoot') {
-    console.log('FileDir',fileDir)
     sidebarItem.link = {
       type:'doc',
       id: fileDir.name.split('/').length>1 ? `${apiName}/${fileDir.name}/v1` : `${apiName}/${nestedResourceType}/${fileDir.name}/v1`

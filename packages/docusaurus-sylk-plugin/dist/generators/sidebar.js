@@ -95,16 +95,15 @@ var compactFileDirectory = function (fileDir) {
 // convert FileDirectory to a docusaurus sidebar object
 var convertDirectoryToSidebar = function (fileDir, apiName) {
     var _a;
-    var _b, _c;
+    var _b;
     // construct category
     var nestedResourceType = fileDir.files ? (_b = fileDir.files[0].resourceDescriptor) === null || _b === void 0 ? void 0 : _b.resource.type : 'sylkRoot';
-    console.log((_c = fileDir.files) === null || _c === void 0 ? void 0 : _c.map(function (f) { var _a, _b, _c; return (_c = (_b = (_a = f.resourceDescriptor) === null || _a === void 0 ? void 0 : _a.resource.fullName) === null || _b === void 0 ? void 0 : _b.split('.').pop()) === null || _c === void 0 ? void 0 : _c.split('v')[1]; }));
+    // console.log(fileDir.files?.map(f => f.resourceDescriptor?.resource.fullName?.split('.').pop()?.split('v')[1]))
     var sidebarItem = {
         type: 'category',
         label: fileDir.name,
     };
     if (nestedResourceType !== 'sylkRoot') {
-        console.log('FileDir', fileDir);
         sidebarItem.link = {
             type: 'doc',
             id: fileDir.name.split('/').length > 1 ? "".concat(apiName, "/").concat(fileDir.name, "/v1") : "".concat(apiName, "/").concat(nestedResourceType, "/").concat(fileDir.name, "/v1")

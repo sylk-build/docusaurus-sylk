@@ -75,11 +75,11 @@ var generateDocFile = function (resourceDescriptor) {
     });
 };
 var generateDocServiceContents = function (serviceDescriptor) {
-    return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(serviceDescriptor.fullName), "\nhide_title: true\n---\n\n# `").concat((0, utils_1.getLeafFileName)(serviceDescriptor.name), "`\n_**Full Name** ").concat(serviceDescriptor.fullName));
+    return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(serviceDescriptor.fullName), "\nhide_title: true\n---\nimport { SylkMethodsProto } from '@theme/SylkProto/SylkProto';\n\n# `").concat((0, utils_1.getLeafFileName)(serviceDescriptor.name), "`\n\n**Full Name** ").concat(serviceDescriptor.fullName, "\n\n<SylkMethodsProto dependencies={").concat(JSON.stringify(serviceDescriptor.dependencies), "} methods={").concat(JSON.stringify(serviceDescriptor.methods), "} />\n"));
 };
 var generateDocPackageContents = function (fileDescriptor) {
     // TODO: run through prettier for consistent formatting.
-    return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(fileDescriptor.package), "\nhide_title: true\n---\nimport { SylkMessageProto, SylkEnumProto } from '@theme/SylkProto/SylkProto';\n// import { ProtoMessage, ProtoServiceMethod, ProtoEnum } from '@theme/SylkProject';\n\n# `").concat((0, utils_1.getLeafFileName)(fileDescriptor.name), "`\n_**path** ").concat(fileDescriptor.name, "_\n\n_**package** ").concat(fileDescriptor.package, "_\n\n").concat(fileDescriptor.description, "\n\n---\n\n").concat([
+    return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(fileDescriptor.package), "\nhide_title: true\n---\nimport { SylkMessageProto, SylkEnumProto } from '@theme/SylkProto/SylkProto';\n\n# `").concat((0, utils_1.getLeafFileName)(fileDescriptor.name), "`\n_**path** ").concat(fileDescriptor.name, "_\n\n_**package** ").concat(fileDescriptor.package, "_\n\n").concat(fileDescriptor.description, "\n\n---\n\n").concat([
         generateMessageSectionMdx(fileDescriptor.messages, fileDescriptor.dependencies),
         generateEnumSectionMdx(fileDescriptor.enums),
         // generateServiceSectionMdx(fileDescriptor.resource),
