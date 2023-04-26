@@ -66,7 +66,10 @@ const parseNestedTypeLink = (nestedType:string,dependencies:string[],fromService
   if (nestedType.includes('google.protobuf.')) {
     link = wellKnownTypes+nestedType.split('.').pop()?.toLocaleLowerCase()
   } else {
-    link = preNav+'#'+nestedType.split('.').join('').toLocaleLowerCase()
+    let tempName = nestedType.split('.').pop();
+    if(tempName) {
+      link = preNav+'#'+tempName.toLocaleLowerCase()
+    }
   }
   return link
 }
@@ -197,7 +200,7 @@ export const SylkMessageProto = (props: MessageProps) => {
   
     return (
       <>
-        <Link to={message.fullName}>[{message.fullName}]</Link>
+        {/* <Link to={message.fullName}>[{message.fullName}]</Link> */}
         
         <p style={{ whiteSpace: 'pre-wrap' }}>{message.description}</p>
 

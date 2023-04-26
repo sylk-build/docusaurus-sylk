@@ -9,6 +9,8 @@ interface PluginOptions {
   sidebarPath?: string;
   // URL base route for the Protobuffet docs section of your site. Not configurable by user here, is assigned using doc option's routeBasePath.
   routeBasePath?: string;
+  // URL for github repository
+  git?: string;
 }
 
 const pluginOptionDefaults = {

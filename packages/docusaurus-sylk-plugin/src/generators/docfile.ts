@@ -8,16 +8,12 @@ import { SylkServerLanguages, sylkServerLanguagesToJSON } from '../sylk/protos/S
 import { SylkService } from '../sylk/protos/SylkService';
 import { Enum, SylkDescriptor, ResourceDescriptor, GeneratedDocFile, Message, Service } from '../types';
 import { getLeafFileName, getVersionFileName } from '../utils';
+
 const listify = (obj:any, mapFn:(k:any,v:any) => any) =>
   Object.entries(obj).reduce((acc:any, [k, v]) => {
     acc.push(mapFn(k, v));
     return acc;
-  }, []);
-
-// export const generateDocFiles = (fileDescriptors: SylkDescriptor): GeneratedDocFile[] => {
-//   const { packages, services }  = fileDescriptors;
-//   return [...packages,...services].map(generateDocFile);
-// };
+}, []);
 
 export const generateSylkIntroFile = (sylkDescriptor: SylkJson[]): GeneratedDocFile[] => {
   return generateSylkProjectInro(sylkDescriptor)
@@ -154,7 +150,7 @@ const generateMessageSectionMdx = (messages: SylkMessage[],dependencies:string[]
 
 ${messages.map((message, i) => (
 `
-### \`${message.fullName}\`
+### \`${message.name}\`
 <SylkMessageProto packageDep={${JSON.stringify(dependencies)}} key={${i}} message={${JSON.stringify(message)}} />
 `
 )).join("\n")}`
@@ -171,7 +167,7 @@ const generateEnumSectionMdx = (enums: SylkEnum[]): string|null => {
 
 ${enums.map((enumb, i) => (
 `
-### \`${enumb.fullName}\`
+### \`${enumb.name}\`
 <SylkEnumProto key={${i}} enumb={${JSON.stringify(enumb)}} />
 `
 )).join("\n")}`

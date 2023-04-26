@@ -11,11 +11,9 @@ var sylk_1 = require("./sylk");
 function validateOptions(_a) {
     var options = _a.options, validate = _a.validate;
     var sylkJsonPaths = options.sylkJsonPaths, sylkDocsPath = options.sylkDocsPath, sidebarPath = options.sidebarPath;
-    console.log(sylkJsonPaths);
     // sylkJsonPath is an existing json file
     var isValidSylkJsons = sylkJsonPaths.map(function (p) { return p.includes('sylk.json'); }).find(function (p) { return p === false; }) !== undefined;
     var isFilesExists = sylkJsonPaths.map(function (p) { return (0, fs_1.existsSync)(p); }).find(function (p) { return p === false; }) !== undefined;
-    console.log(isValidSylkJsons, isFilesExists);
     if (!sylkJsonPaths || sylkJsonPaths.length === 0 || isFilesExists || isValidSylkJsons) {
         throw new Error("Expected sylkJsonPaths option to reference a present file. Check your path: ".concat(sylkJsonPaths));
     }
@@ -44,7 +42,7 @@ var validateSylkJson = function (json) {
 };
 function plugin(context, options) {
     return {
-        name: "docusaurus-protobuffet-plugin",
+        name: "docusaurus-sylk-plugin",
         extendCli: function (cli) {
             cli
                 .command("generate-sylk-docs")

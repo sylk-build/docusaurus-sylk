@@ -16,15 +16,15 @@ export interface PluginOptions {
   sidebarPath: string;
   // URL route for the docs section of your site.
   routeBasePath: string;
+  // URL for github repository
+  git?: string;
 }
 
 export function validateOptions({ options, validate }: { options: PluginOptions, validate: () => void }): PluginOptions {
   const { sylkJsonPaths, sylkDocsPath, sidebarPath } = options;
-  console.log(sylkJsonPaths)
   // sylkJsonPath is an existing json file
   const isValidSylkJsons = sylkJsonPaths.map(p => p.includes('sylk.json')).find(p => p === false) !== undefined
   const isFilesExists = sylkJsonPaths.map(p => existsSync(p)).find(p => p === false) !== undefined
-  console.log(isValidSylkJsons,isFilesExists)
   if (!sylkJsonPaths || sylkJsonPaths.length === 0 || isFilesExists || isValidSylkJsons ) {
 
     throw new Error(`Expected sylkJsonPaths option to reference a present file. Check your path: ${sylkJsonPaths}`);
@@ -60,7 +60,7 @@ export default function plugin(
   options: PluginOptions,
 ): Plugin<never> {
   return {
-    name: "docusaurus-protobuffet-plugin",
+    name: "docusaurus-sylk-plugin",
 
     extendCli(cli) {
       cli
@@ -77,7 +77,7 @@ export default function plugin(
             // Validating sylk.json format
             validateSylkJson(sylkJson)
             sylkJsons.push(sylkJson)
-  
+
             // generate markdown files for each in fileDescriptors
             const docFiles = generateSylkDocFiles(sylkJson);
             // write files to appropriate directories

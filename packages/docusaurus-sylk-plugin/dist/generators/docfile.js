@@ -31,10 +31,6 @@ var listify = function (obj, mapFn) {
         return acc;
     }, []);
 };
-// export const generateDocFiles = (fileDescriptors: SylkDescriptor): GeneratedDocFile[] => {
-//   const { packages, services }  = fileDescriptors;
-//   return [...packages,...services].map(generateDocFile);
-// };
 var generateSylkIntroFile = function (sylkDescriptor) {
     return generateSylkProjectInro(sylkDescriptor);
 };
@@ -89,13 +85,13 @@ var generateMessageSectionMdx = function (messages, dependencies) {
     if (messages.length == 0) {
         return null;
     }
-    return ("## Messages\n\n".concat(messages.map(function (message, i) { return ("\n### `".concat(message.fullName, "`\n<SylkMessageProto packageDep={").concat(JSON.stringify(dependencies), "} key={").concat(i, "} message={").concat(JSON.stringify(message), "} />\n")); }).join("\n")));
+    return ("## Messages\n\n".concat(messages.map(function (message, i) { return ("\n### `".concat(message.name, "`\n<SylkMessageProto packageDep={").concat(JSON.stringify(dependencies), "} key={").concat(i, "} message={").concat(JSON.stringify(message), "} />\n")); }).join("\n")));
 };
 var generateEnumSectionMdx = function (enums) {
     if (enums.length == 0) {
         return null;
     }
-    return ("## Enums\n\n".concat(enums.map(function (enumb, i) { return ("\n### `".concat(enumb.fullName, "`\n<SylkEnumProto key={").concat(i, "} enumb={").concat(JSON.stringify(enumb), "} />\n")); }).join("\n")));
+    return ("## Enums\n\n".concat(enums.map(function (enumb, i) { return ("\n### `".concat(enumb.name, "`\n<SylkEnumProto key={").concat(i, "} enumb={").concat(JSON.stringify(enumb), "} />\n")); }).join("\n")));
 };
 var generateServiceSectionMdx = function (services) {
     if (services.length == 0) {

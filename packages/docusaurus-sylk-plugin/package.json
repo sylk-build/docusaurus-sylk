@@ -1,6 +1,6 @@
 {
   "name": "docusaurus-sylk-plugin",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Sylk documentation plugin for Docusaurus",
   "main": "dist/index.js",
   "scripts": {

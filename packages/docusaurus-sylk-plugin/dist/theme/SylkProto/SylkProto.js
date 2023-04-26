@@ -25,7 +25,10 @@ var parseNestedTypeLink = function (nestedType, dependencies, fromService) {
         link = wellKnownTypes + ((_a = nestedType.split('.').pop()) === null || _a === void 0 ? void 0 : _a.toLocaleLowerCase());
     }
     else {
-        link = preNav + '#' + nestedType.split('.').join('').toLocaleLowerCase();
+        var tempName = nestedType.split('.').pop();
+        if (tempName) {
+            link = preNav + '#' + tempName.toLocaleLowerCase();
+        }
     }
     return link;
 };
@@ -125,10 +128,6 @@ var SylkProtoMessageFields = function (props) {
 var SylkMessageProto = function (props) {
     var message = props.message, packageDep = props.packageDep;
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(Link_1.default, { to: message.fullName },
-            "[",
-            message.fullName,
-            "]"),
         react_1.default.createElement("p", { style: { whiteSpace: 'pre-wrap' } }, message.description),
         react_1.default.createElement(SylkProtoMessageFields, { packageDep: packageDep, fields: message.fields })));
 };
