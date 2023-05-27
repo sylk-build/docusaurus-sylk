@@ -18,18 +18,11 @@ module.exports = {
         },
         items: [
           {
-            to: 'sylkdocs/sylk/example/ad/v1/ads.proto',
+            to: 'sylkdocs/intro',
             activeBasePath: 'sylkdocs',
             label: 'Sylk Docs',
             position: 'left',
           },
-          {
-            to: 'docs/',
-            activeBasePath: 'docs',
-            label: 'Docusaurus',
-            position: 'left',
-          },
-          {to: 'blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/sylk-build/docusaurus-sylk',
             label: 'GitHub',
@@ -45,15 +38,7 @@ module.exports = {
             items: [
               {
                 label: 'Overview',
-                to: 'https://protobuffet.com/docs/what/overview',
-              },
-              {
-                label: 'Features',
-                to: 'https://protobuffet.com/docs/what/features',
-              },
-              {
-                label: 'Motivation',
-                to: 'https://protobuffet.com/docs/what/motivation',
+                to: 'https://docs.sylk.build/',
               },
             ],
           },
@@ -62,11 +47,7 @@ module.exports = {
             items: [
               {
                 label: 'Installation',
-                to: 'https://protobuffet.com/docs/how/installation',
-              },
-              {
-                label: 'Usage',
-                to: 'https://protobuffet.com/docs/how/usage'
+                to: 'https://docs.sylk.build/cli/installation',
               },
             ],
           },
@@ -109,11 +90,13 @@ module.exports = {
         {
           sylk: {
             sylkJsonPaths: [
-              './sylk/TodoApp/sylk.json'
+              './sylk/TodoAppPy/sylk.json'
             ],
             sylkDocsPath: './sylkdocs',
+            sidebarPath: './sidebarsSylkdocs.js'
           },
           docs: {
+            routeBasePath: 'sylkdocs',
             sidebarPath: './sidebarsSylkdocs.js',
           }
         }

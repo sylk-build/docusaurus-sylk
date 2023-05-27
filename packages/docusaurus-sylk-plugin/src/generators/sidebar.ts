@@ -25,10 +25,10 @@ export const generateSidebarFileCategory = (docFiles: GeneratedDocFile[],apiName
   return {
     type: 'category',
     label: apiName,
-    link: {
-      type:'doc',
-      id:`${apiName}/intro`
-    },
+    // link: {
+    //   type:'doc',
+    //   id:`${apiName}/intro`
+    // },
     items: sidebarObject.items,
   };
 };
@@ -44,8 +44,8 @@ interface SidebarItem {
   type: string;
   id?: string;
   label?: string;
-  items?: SidebarItem[],
-  link?: any;
+  items?: any[],
+  // link?: any;
 }
 
 // build nested file directory map
@@ -120,16 +120,17 @@ const convertDirectoryToSidebar = (fileDir: FileDirectory,apiName:string) => {
     type: 'category',
     label: fileDir.name,
   }
-  
-  if(nestedResourceType !== 'sylkRoot') {
-    sidebarItem.link = {
-      type:'doc',
-      id: fileDir.name.split('/').length>1 ? `${apiName}/${fileDir.name}/v1` : `${apiName}/${nestedResourceType}/${fileDir.name}/v1`
-    }
-  }
+
+  // if(nestedResourceType !== 'sylkRoot') {
+  //   sidebarItem.link = {
+  //     type:'doc',
+  //     id: fileDir.name.split('/').length>1 ? `${apiName}/${fileDir.name}/v1` : `${apiName}/${nestedResourceType}/${fileDir.name}/v1`
+  //   }
+  // }
 
   // assign nested category items
   if (fileDir.nested) {
+    sidebarItem.items?.push(`${apiName}/intro`)
     Object.keys(fileDir.nested).forEach(nestedKey => {
       const nested = fileDir.nested![nestedKey];
       const nestedSidebarItem = convertDirectoryToSidebar(nested,apiName);

@@ -28,10 +28,10 @@ var generateSidebarFileCategory = function (docFiles, apiName) {
     return {
         type: 'category',
         label: apiName,
-        link: {
-            type: 'doc',
-            id: "".concat(apiName, "/intro")
-        },
+        // link: {
+        //   type:'doc',
+        //   id:`${apiName}/intro`
+        // },
         items: sidebarObject.items,
     };
 };
@@ -95,7 +95,7 @@ var compactFileDirectory = function (fileDir) {
 // convert FileDirectory to a docusaurus sidebar object
 var convertDirectoryToSidebar = function (fileDir, apiName) {
     var _a;
-    var _b;
+    var _b, _c;
     // construct category
     var nestedResourceType = fileDir.files ? (_b = fileDir.files[0].resourceDescriptor) === null || _b === void 0 ? void 0 : _b.resource.type : 'sylkRoot';
     // console.log(fileDir.files?.map(f => f.resourceDescriptor?.resource.fullName?.split('.').pop()?.split('v')[1]))
@@ -103,14 +103,15 @@ var convertDirectoryToSidebar = function (fileDir, apiName) {
         type: 'category',
         label: fileDir.name,
     };
-    if (nestedResourceType !== 'sylkRoot') {
-        sidebarItem.link = {
-            type: 'doc',
-            id: fileDir.name.split('/').length > 1 ? "".concat(apiName, "/").concat(fileDir.name, "/v1") : "".concat(apiName, "/").concat(nestedResourceType, "/").concat(fileDir.name, "/v1")
-        };
-    }
+    // if(nestedResourceType !== 'sylkRoot') {
+    //   sidebarItem.link = {
+    //     type:'doc',
+    //     id: fileDir.name.split('/').length>1 ? `${apiName}/${fileDir.name}/v1` : `${apiName}/${nestedResourceType}/${fileDir.name}/v1`
+    //   }
+    // }
     // assign nested category items
     if (fileDir.nested) {
+        (_c = sidebarItem.items) === null || _c === void 0 ? void 0 : _c.push("".concat(apiName, "/intro"));
         Object.keys(fileDir.nested).forEach(function (nestedKey) {
             var nested = fileDir.nested[nestedKey];
             var nestedSidebarItem = convertDirectoryToSidebar(nested, apiName);

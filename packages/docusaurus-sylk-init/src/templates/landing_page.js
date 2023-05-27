@@ -12,7 +12,7 @@ const features = [
     description: (
       <>
         Use our CLI to parse your Protobuf files and build
-        deep linked markdown documentation. Sidebar and search support 
+        deep linked markdown documentation. Sidebar and auto-generated descriptions
         to improve discovery within your docs.
       </>
     ),
@@ -64,7 +64,7 @@ export default function Home() {
       <header className={clsx('hero', styles.heroBanner)}>
         <div className={clsx('container', styles.heroBannerInner)}>
           <h1 className={clsx('hero__title', styles.heroTitleTextHtml)}>
-            Toolset for <b>building</b> your <b>protobuf</b> documentation
+            Sylk build plugin for <b>building</b> your <b>schema</b> documentation
           </h1>
           <div className={styles.buttons}>
             <Link
@@ -72,7 +72,7 @@ export default function Home() {
                 'button button--primary',
                 styles.getStarted,
               )}
-              to='https://protobuffet.com/docs/what/overview'>
+              to='https://sylk.build'>
               Get Started
             </Link>
           </div>
