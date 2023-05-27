@@ -31,13 +31,13 @@ var listify = function (obj, mapFn) {
         return acc;
     }, []);
 };
-var generateSylkIntroFile = function (sylkDescriptor) {
-    return generateSylkProjectInro(sylkDescriptor);
+var generateSylkIntroFile = function (sylkDescriptor, sylkDocsPath) {
+    return generateSylkProjectInro(sylkDescriptor, sylkDocsPath);
 };
 exports.generateSylkIntroFile = generateSylkIntroFile;
-var generateSylkProjectInro = function (sylkDescriptors) { return (__spreadArray([
+var generateSylkProjectInro = function (sylkDescriptors, sylkDocsPath) { return (__spreadArray([
     {
-        fileContents: generateDocSylkContents(sylkDescriptors),
+        fileContents: generateDocSylkContents(sylkDescriptors, sylkDocsPath),
         fileName: 'index',
     }
 ], sylkDescriptors.map(function (sylk) {
@@ -50,8 +50,8 @@ var generateSylkProjectInro = function (sylkDescriptors) { return (__spreadArray
         }
     });
 }), true)); };
-var generateDocSylkContents = function (sylks) {
-    return ("---\ntitle: Sylk Docs\nhide_title: true\n---\n\n# Sylk Generated Docs\n\n".concat(sylks.map(function (s) { var _a, _b; return "[".concat((_a = s.project) === null || _a === void 0 ? void 0 : _a.name, "](").concat((_b = s.project) === null || _b === void 0 ? void 0 : _b.name, ")"); }).join('\n\n'), "\n"));
+var generateDocSylkContents = function (sylks, sylkDocsPath) {
+    return ("---\ntitle: Sylk Docs\nhide_title: true\n---\n\n# Sylk Generated Docs\n\n".concat(sylks.map(function (s) { var _a, _b; return "[".concat((_a = s.project) === null || _a === void 0 ? void 0 : _a.name, "](").concat(sylkDocsPath, "/").concat((_b = s.project) === null || _b === void 0 ? void 0 : _b.name, ")"); }).join('\n\n'), "\n"));
 };
 var generateDocProjectContents = function (sylkDescriptor) {
     var _a, _b, _c, _d, _e, _f, _g, _h;

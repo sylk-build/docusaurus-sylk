@@ -76,7 +76,7 @@ function plugin(context, options) {
                 var sidebarFileContents = (0, generators_1.generateSidebarFileContents)(sidebarSylkContents);
                 // write sidebar object
                 (0, fs_1.writeFileSync)(options.sidebarPath, sidebarFileContents);
-                var sylkIntro = (0, generators_1.generateSylkIntroFile)(sylkJsons);
+                var sylkIntro = (0, generators_1.generateSylkIntroFile)(sylkJsons, options.sylkDocsPath);
                 sylkIntro.forEach(function (json) {
                     var sylkIntroFilename = "".concat(options.sylkDocsPath, "/").concat(json.fileName, ".mdx");
                     var sylkIntroFileDir = path_1.default.dirname(sylkIntroFilename);
