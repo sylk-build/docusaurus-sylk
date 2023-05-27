@@ -4,8 +4,8 @@ module.exports = {
     tagline: 'Documentation Toolset for Your Sylk Workspace',
     url: 'https://sylk.build',
     baseUrl: '/',
-    organizationName: 'sylk', // Usually your GitHub org/user name.
-    projectName: 'sylk-build', // Usually your repo name.
+    organizationName: 'sylk-build', // Usually your GitHub org/user name.
+    projectName: 'docusaurus-sylk', // Usually your repo name.
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
@@ -75,7 +75,7 @@ module.exports = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/protobuffet/docusaurus-protobuffet',
+                href: 'https://github.com/sylk-build/sylk',
               },
             ],
           },
@@ -108,22 +108,13 @@ module.exports = {
         'docusaurus-sylk',
         {
           sylk: {
-            sylkJsonPaths: './api/sylk.json',
+            sylkJsonPaths: './sylk/sylk.json',
             sylkDocsPath: './sylkdocs',
+          },
+          docs: {
             sidebarPath: './sidebarsSylkdocs.js',
           }
         }
       ]
     ],
-    plugins: [
-      [
-        '@easyops-cn/docusaurus-search-local',
-        {
-          hashed: true,
-          docsRouteBasePath: 'sylkdocs',
-          docsDir: 'sylkdocs',
-          indexBlog: false,
-        },
-      ],
-    ]
   };

@@ -6,6 +6,7 @@
     "@docusaurus/types": "^2.4.0",
     "@tsconfig/docusaurus": "^1.0.7",
     "@types/node": "^18.16.1",
+    "lerna": "^4.0.0",
     "typescript": "^5.0.4"
   }
 }

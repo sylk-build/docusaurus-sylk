@@ -54,4 +54,4 @@ npx docusaurus generate-sylk-docs
 ```
 
 ---
-This plugin created with love by [`Sylk Team`](https://sylk.build/)
+This plugin created with ❤️ by [`Sylk Team`](https://sylk.build/)

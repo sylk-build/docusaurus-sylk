@@ -41,48 +41,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
-var chalk_1 = __importDefault(require("chalk"));
+// import chalk from 'chalk';
 var path_1 = __importDefault(require("path"));
 var child_process_1 = require("child_process");
 var DEFAULT_TEMPLATE = 'classic';
 function init(siteName) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            console.log(chalk_1.default.cyan('Triggering @docusaurus/core project creation.'));
+            console.log('Triggering @docusaurus/core project creation.');
             try {
                 (0, child_process_1.execSync)("npx @docusaurus/init@latest init --use-npm ".concat(siteName, " ").concat(DEFAULT_TEMPLATE, " "), { stdio: 'inherit' });
             }
             catch (err) {
-                console.log(chalk_1.default.red('Generation of base template from @docusaurus/init failed.'));
+                console.log('Generation of base template from @docusaurus/init failed.');
                 throw err;
             }
-            console.log(chalk_1.default.cyan('Installing docusaurus-protobuffet with recommended plugins.'));
+            console.log('Installing docusaurus-sylk with recommended plugins.');
             try {
-                (0, child_process_1.execSync)("cd ".concat(siteName, " && npm install --save docusaurus-protobuffet @easyops-cn/docusaurus-search-local"), { stdio: 'inherit' });
+                console.log(path_1.default.join(path_1.default.resolve(__dirname), '../', 'docusaurus-sylk'));
+                (0, child_process_1.execSync)("cd ".concat(siteName, " && npm install --save ").concat(path_1.default.resolve(__dirname), " "), { stdio: 'inherit' });
             }
             catch (err) {
-                console.log(chalk_1.default.red('Installation of Protobuffet preset failed.'));
+                console.log('Installation of Sylk preset failed.');
                 throw err;
             }
-            console.log(chalk_1.default.cyan('Initializing docusaurus-protobuffet with default options and sample fixtures.'));
-            fs_1.default.mkdirSync("".concat(siteName, "/protodocs"));
-            fs_1.default.mkdirSync("".concat(siteName, "/fixtures"));
-            fs_1.default.writeFileSync("".concat(siteName, "/sidebarsProtodocs.js"), '');
+            console.log('Initializing docusaurus-sylk with default options and sample fixtures.');
+            fs_1.default.mkdirSync("".concat(siteName, "/sylkdocs"));
+            fs_1.default.mkdirSync("".concat(siteName, "/sylk"));
+            fs_1.default.writeFileSync("".concat(siteName, "/sidebarsSylkdocs.js"), '');
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/docusaurus.config.js'), "".concat(siteName, "/docusaurus.config.js"));
-            fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/proto_workspace.json'), "".concat(siteName, "/fixtures/proto_workspace.json"));
+            fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/sylk.json'), "".concat(siteName, "/sylk/sylk.json"));
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/landing_page.js'), "".concat(siteName, "/src/pages/index.js"));
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/landing_page.module.css'), "".concat(siteName, "/src/pages/styles.module.css"));
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/logo.png'), "".concat(siteName, "/static/img/logo.png"));
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/favicon.ico'), "".concat(siteName, "/static/img/favicon.ico"));
-            console.log(chalk_1.default.cyan('Generating Proto doc files for sample fixtures.'));
+            console.log('Generating Sylk doc files for sample fixtures.');
             try {
-                (0, child_process_1.execSync)("cd ".concat(siteName, " && npx docusaurus generate-proto-docs"), { stdio: 'inherit' });
+                (0, child_process_1.execSync)("cd ".concat(siteName, " && npx docusaurus generate-sylk-docs"), { stdio: 'inherit' });
             }
             catch (err) {
-                console.log(chalk_1.default.red('Generation of Proto docs failed.'));
+                console.log('Generation of Sylk docs failed.');
                 throw err;
             }
-            console.log(chalk_1.default.green('Successful setup of Docusaurus site with Protobuffet preset! Try it out with `npm run start` in the site directory.'));
+            console.log('Successful setup of Docusaurus site with Sylk preset! Try it out with `npm run start` in the site directory.');
             return [2 /*return*/];
         });
     });
