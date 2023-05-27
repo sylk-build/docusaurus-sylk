@@ -38,20 +38,20 @@ exports.generateSylkIntroFile = generateSylkIntroFile;
 var generateSylkProjectInro = function (sylkDescriptors) { return (__spreadArray([
     {
         fileContents: generateDocSylkContents(sylkDescriptors),
-        fileName: 'intro',
+        fileName: 'index',
     }
 ], sylkDescriptors.map(function (sylk) {
     var _a;
     return ({
         fileContents: generateDocProjectContents(sylk),
-        fileName: "".concat((_a = sylk.project) === null || _a === void 0 ? void 0 : _a.name, "/intro"),
+        fileName: "".concat((_a = sylk.project) === null || _a === void 0 ? void 0 : _a.name, "/index"),
         resourceDescriptor: {
             resource: sylk.project
         }
     });
 }), true)); };
 var generateDocSylkContents = function (sylks) {
-    return ("---\ntitle: Sylk Docs\nhide_title: true\n---\n\n# Sylk Generated Docs\n\n".concat(sylks.map(function (s) { var _a, _b; return "[".concat((_a = s.project) === null || _a === void 0 ? void 0 : _a.name, "](").concat((_b = s.project) === null || _b === void 0 ? void 0 : _b.name, "/intro)"); }).join('\n\n'), "\n"));
+    return ("---\ntitle: Sylk Docs\nhide_title: true\n---\n\n# Sylk Generated Docs\n\n".concat(sylks.map(function (s) { var _a, _b; return "[".concat((_a = s.project) === null || _a === void 0 ? void 0 : _a.name, "](").concat((_b = s.project) === null || _b === void 0 ? void 0 : _b.name, "/index)"); }).join('\n\n'), "\n"));
 };
 var generateDocProjectContents = function (sylkDescriptor) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -63,10 +63,12 @@ var generateSylkDocFiles = function (sylkDescriptor) {
 };
 exports.generateSylkDocFiles = generateSylkDocFiles;
 var generateDocFile = function (resourceDescriptor) {
-    var _a, _b;
+    var _a, _b, _c;
     return ({
-        fileContents: resourceDescriptor.resource.type === 'packages' ? generateDocPackageContents(resourceDescriptor.resource) : generateDocServiceContents(resourceDescriptor.resource),
-        fileName: "".concat(resourceDescriptor.resource.type, "/").concat(resourceDescriptor.resource.name, "/").concat(resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : (_b = (_a = resourceDescriptor.resource) === null || _a === void 0 ? void 0 : _a.package) === null || _b === void 0 ? void 0 : _b.split('.')[2]),
+        fileContents: resourceDescriptor.resource.type === 'packages'
+            ? generateDocPackageContents(resourceDescriptor.resource)
+            : generateDocServiceContents(resourceDescriptor.resource),
+        fileName: "".concat((_a = resourceDescriptor.resource.type) === null || _a === void 0 ? void 0 : _a.toUpperCase(), "/").concat(resourceDescriptor.resource.name, "/").concat(resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : (_c = (_b = resourceDescriptor.resource) === null || _b === void 0 ? void 0 : _b.package) === null || _c === void 0 ? void 0 : _c.split('.')[2]),
         resourceDescriptor: resourceDescriptor,
     });
 };
@@ -78,7 +80,6 @@ var generateDocPackageContents = function (fileDescriptor) {
     return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(fileDescriptor.package), "\nhide_title: true\n---\nimport { SylkMessageProto, SylkEnumProto } from '@theme/SylkProto/SylkProto';\n\n# `").concat((0, utils_1.getLeafFileName)(fileDescriptor.name), "`\n_**path** ").concat(fileDescriptor.name, "_\n\n_**package** ").concat(fileDescriptor.package, "_\n\n").concat(fileDescriptor.description, "\n\n---\n\n").concat([
         generateMessageSectionMdx(fileDescriptor.messages, fileDescriptor.dependencies),
         generateEnumSectionMdx(fileDescriptor.enums),
-        // generateServiceSectionMdx(fileDescriptor.resource),
     ].filter(Boolean).map(function (section) { return section + "\n---\n"; }).join(""), "\n\n  "));
 };
 var generateMessageSectionMdx = function (messages, dependencies) {

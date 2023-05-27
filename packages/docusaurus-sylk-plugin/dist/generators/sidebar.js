@@ -111,7 +111,12 @@ var convertDirectoryToSidebar = function (fileDir, apiName) {
     // }
     // assign nested category items
     if (fileDir.nested) {
-        (_c = sidebarItem.items) === null || _c === void 0 ? void 0 : _c.push("".concat(apiName, "/intro"));
+        var index = {
+            type: 'doc',
+            label: 'Project',
+            id: fileDir.name
+        };
+        (_c = sidebarItem.items) === null || _c === void 0 ? void 0 : _c.push(index);
         Object.keys(fileDir.nested).forEach(function (nestedKey) {
             var nested = fileDir.nested[nestedKey];
             var nestedSidebarItem = convertDirectoryToSidebar(nested, apiName);
