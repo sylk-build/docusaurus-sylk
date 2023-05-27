@@ -1,6 +1,6 @@
 {
   "name": "docusaurus-sylk",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Sylk documentation toolset for Docusaurus",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
   "author": "Amit Shmulevitch",
   "license": "ISC",
   "dependencies": {
-    "docusaurus-sylk-plugin": "^0.0.9"
+    "docusaurus-sylk-plugin": "^0.1.0"
   },
   "devDependencies": {
     "@docusaurus/types": "^2.4.0"
