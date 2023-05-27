@@ -99,7 +99,7 @@ export default function plugin(
           // write sidebar object
           writeFileSync(options.sidebarPath, sidebarFileContents);
 
-          const sylkIntro = generateSylkIntroFile(sylkJsons);
+          const sylkIntro = generateSylkIntroFile(sylkJsons,options.sylkDocsPath);
           sylkIntro.forEach(json => {
             let sylkIntroFilename = `${options.sylkDocsPath}/${json.fileName}.mdx`;
             const sylkIntroFileDir = path.dirname(sylkIntroFilename);

@@ -15,13 +15,13 @@ const listify = (obj:any, mapFn:(k:any,v:any) => any) =>
     return acc;
 }, []);
 
-export const generateSylkIntroFile = (sylkDescriptor: SylkJson[]): GeneratedDocFile[] => {
-  return generateSylkProjectInro(sylkDescriptor)
+export const generateSylkIntroFile = (sylkDescriptor: SylkJson[], sylkDocsPath: string): GeneratedDocFile[] => {
+  return generateSylkProjectInro(sylkDescriptor,sylkDocsPath)
 }
 
-const generateSylkProjectInro = (sylkDescriptors: SylkJson[]): GeneratedDocFile[] => ([
+const generateSylkProjectInro = (sylkDescriptors: SylkJson[], sylkDocsPath: string): GeneratedDocFile[] => ([
 {
-  fileContents: generateDocSylkContents(sylkDescriptors),
+  fileContents: generateDocSylkContents(sylkDescriptors,sylkDocsPath),
   fileName: 'index',
 },...sylkDescriptors.map(sylk => ({
   fileContents: generateDocProjectContents(sylk),
@@ -31,7 +31,7 @@ const generateSylkProjectInro = (sylkDescriptors: SylkJson[]): GeneratedDocFile[
   }
 }))])
 
-const generateDocSylkContents = (sylks:SylkJson[]): string => {
+const generateDocSylkContents = (sylks:SylkJson[], sylkDocsPath: string): string => {
   return (`---
 title: Sylk Docs
 hide_title: true
@@ -39,7 +39,7 @@ hide_title: true
 
 # Sylk Generated Docs
 
-${sylks.map(s => `[${s.project?.name}](${s.project?.name})`).join('\n\n')}
+${sylks.map(s => `[${s.project?.name}](${sylkDocsPath}/${s.project?.name})`).join('\n\n')}
 `)
 }
 
