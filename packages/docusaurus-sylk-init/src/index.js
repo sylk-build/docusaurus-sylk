@@ -22,8 +22,7 @@ export default async function init(
   console.log('Installing docusaurus-sylk with recommended plugins.');
 
   try {
-    console.log(path.join(path.resolve(__dirname), '../','docusaurus-sylk'))
-    execSync(`cd ${siteName} && npm install --save ${path.resolve(__dirname)} `, { stdio: 'inherit' });
+    execSync(`cd ${siteName} && npm install --save docusaurus-sylk`, { stdio: 'inherit' });
   } catch (err) {
     console.log('Installation of Sylk preset failed.');
     throw err;
