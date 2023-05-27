@@ -24,7 +24,7 @@ export const generateSidebarFileCategory = (docFiles: GeneratedDocFile[],apiName
   const index: SidebarItem = {
     type: 'doc',
     label: 'Project',
-    id: fileDirectory.name
+    id: apiName
   }
   let items :any[] = sidebarObject.items ? sidebarObject.items : [];
   return {
