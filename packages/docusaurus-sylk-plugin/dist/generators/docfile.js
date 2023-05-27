@@ -51,7 +51,7 @@ var generateSylkProjectInro = function (sylkDescriptors) { return (__spreadArray
     });
 }), true)); };
 var generateDocSylkContents = function (sylks) {
-    return ("---\ntitle: Sylk Docs\nhide_title: true\n---\n\n# Sylk Generated Docs\n\n".concat(sylks.map(function (s) { var _a, _b; return "[".concat((_a = s.project) === null || _a === void 0 ? void 0 : _a.name, "](").concat((_b = s.project) === null || _b === void 0 ? void 0 : _b.name, "/index)"); }).join('\n\n'), "\n"));
+    return ("---\ntitle: Sylk Docs\nhide_title: true\n---\n\n# Sylk Generated Docs\n\n".concat(sylks.map(function (s) { var _a, _b; return "[".concat((_a = s.project) === null || _a === void 0 ? void 0 : _a.name, "](").concat((_b = s.project) === null || _b === void 0 ? void 0 : _b.name, ")"); }).join('\n\n'), "\n"));
 };
 var generateDocProjectContents = function (sylkDescriptor) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -63,12 +63,12 @@ var generateSylkDocFiles = function (sylkDescriptor) {
 };
 exports.generateSylkDocFiles = generateSylkDocFiles;
 var generateDocFile = function (resourceDescriptor) {
-    var _a, _b, _c;
+    var _a, _b;
     return ({
         fileContents: resourceDescriptor.resource.type === 'packages'
             ? generateDocPackageContents(resourceDescriptor.resource)
             : generateDocServiceContents(resourceDescriptor.resource),
-        fileName: "".concat((_a = resourceDescriptor.resource.type) === null || _a === void 0 ? void 0 : _a.toUpperCase(), "/").concat(resourceDescriptor.resource.name, "/").concat(resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : (_c = (_b = resourceDescriptor.resource) === null || _b === void 0 ? void 0 : _b.package) === null || _c === void 0 ? void 0 : _c.split('.')[2]),
+        fileName: "".concat(resourceDescriptor.resource.type, "/").concat(resourceDescriptor.resource.name, "/").concat(resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : (_b = (_a = resourceDescriptor.resource) === null || _a === void 0 ? void 0 : _a.package) === null || _b === void 0 ? void 0 : _b.split('.')[2]),
         resourceDescriptor: resourceDescriptor,
     });
 };

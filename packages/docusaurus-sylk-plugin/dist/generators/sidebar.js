@@ -25,6 +25,12 @@ var generateSidebarFileCategory = function (docFiles, apiName) {
     compactFileDirectory(fileDirectory);
     var sidebarObject = convertDirectoryToSidebar(fileDirectory, apiName);
     var sidebarItems = sidebarObject.label == '/' ? sidebarObject.items : [sidebarObject];
+    var index = {
+        type: 'doc',
+        label: 'Project',
+        id: fileDirectory.name
+    };
+    var items = sidebarObject.items ? sidebarObject.items : [];
     return {
         type: 'category',
         label: apiName,
@@ -32,7 +38,7 @@ var generateSidebarFileCategory = function (docFiles, apiName) {
         //   type:'doc',
         //   id:`${apiName}/intro`
         // },
-        items: sidebarObject.items,
+        items: __spreadArray([index], items, true),
     };
 };
 exports.generateSidebarFileCategory = generateSidebarFileCategory;
@@ -95,7 +101,7 @@ var compactFileDirectory = function (fileDir) {
 // convert FileDirectory to a docusaurus sidebar object
 var convertDirectoryToSidebar = function (fileDir, apiName) {
     var _a;
-    var _b, _c;
+    var _b;
     // construct category
     var nestedResourceType = fileDir.files ? (_b = fileDir.files[0].resourceDescriptor) === null || _b === void 0 ? void 0 : _b.resource.type : 'sylkRoot';
     // console.log(fileDir.files?.map(f => f.resourceDescriptor?.resource.fullName?.split('.').pop()?.split('v')[1]))
@@ -111,12 +117,6 @@ var convertDirectoryToSidebar = function (fileDir, apiName) {
     // }
     // assign nested category items
     if (fileDir.nested) {
-        var index = {
-            type: 'doc',
-            label: 'Project',
-            id: fileDir.name
-        };
-        (_c = sidebarItem.items) === null || _c === void 0 ? void 0 : _c.push(index);
         Object.keys(fileDir.nested).forEach(function (nestedKey) {
             var nested = fileDir.nested[nestedKey];
             var nestedSidebarItem = convertDirectoryToSidebar(nested, apiName);
