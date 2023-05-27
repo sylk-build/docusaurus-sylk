@@ -130,7 +130,12 @@ const convertDirectoryToSidebar = (fileDir: FileDirectory,apiName:string) => {
 
   // assign nested category items
   if (fileDir.nested) {
-    sidebarItem.items?.push(`${apiName}/intro`)
+    const index: SidebarItem = {
+      type: 'doc',
+      label: 'Project',
+      id: fileDir.name
+    }
+    sidebarItem.items?.push(index)
     Object.keys(fileDir.nested).forEach(nestedKey => {
       const nested = fileDir.nested![nestedKey];
       const nestedSidebarItem = convertDirectoryToSidebar(nested,apiName);

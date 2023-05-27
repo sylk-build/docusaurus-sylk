@@ -22,10 +22,10 @@ export const generateSylkIntroFile = (sylkDescriptor: SylkJson[]): GeneratedDocF
 const generateSylkProjectInro = (sylkDescriptors: SylkJson[]): GeneratedDocFile[] => ([
 {
   fileContents: generateDocSylkContents(sylkDescriptors),
-  fileName: 'intro',
+  fileName: 'index',
 },...sylkDescriptors.map(sylk => ({
   fileContents: generateDocProjectContents(sylk),
-  fileName: `${sylk.project?.name}/intro`,
+  fileName: `${sylk.project?.name}/index`,
   resourceDescriptor: {
     resource: <SylkProject>sylk.project
   }
@@ -39,7 +39,7 @@ hide_title: true
 
 # Sylk Generated Docs
 
-${sylks.map(s => `[${s.project?.name}](${s.project?.name}/intro)`).join('\n\n')}
+${sylks.map(s => `[${s.project?.name}](${s.project?.name}/index)`).join('\n\n')}
 `)
 }
 
@@ -89,8 +89,10 @@ export const generateSylkDocFiles = (sylkDescriptor: SylkJson): GeneratedDocFile
 
 
 const generateDocFile = (resourceDescriptor: ResourceDescriptor): GeneratedDocFile => ({
-  fileContents: resourceDescriptor.resource.type === 'packages' ? generateDocPackageContents(<SylkPackage>resourceDescriptor.resource) : generateDocServiceContents(<SylkService>resourceDescriptor.resource),
-  fileName: `${resourceDescriptor.resource.type}/${resourceDescriptor.resource.name}/${resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : resourceDescriptor.resource?.package?.split('.')[2]}`,
+  fileContents: resourceDescriptor.resource.type === 'packages' 
+    ? generateDocPackageContents(<SylkPackage>resourceDescriptor.resource) 
+    : generateDocServiceContents(<SylkService>resourceDescriptor.resource),
+  fileName: `${resourceDescriptor.resource.type?.toUpperCase()}/${resourceDescriptor.resource.name}/${resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : resourceDescriptor.resource?.package?.split('.')[2]}`,
   resourceDescriptor,
 });
 
@@ -133,7 +135,6 @@ ${
   [
     generateMessageSectionMdx(fileDescriptor.messages,fileDescriptor.dependencies),
     generateEnumSectionMdx(fileDescriptor.enums),
-    // generateServiceSectionMdx(fileDescriptor.resource),
   ].filter(Boolean).map(section => section + "\n---\n").join("")
 }
 
