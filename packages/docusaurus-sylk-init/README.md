@@ -17,7 +17,7 @@ Note: These commands should be run from your root directory where you would like
 Run the generator. This will create a directory for your site with the generated files. You must specify the `project_name` variable.
 
 ```sh
-npx docusaurus-sylk-init init <project_name>
+npx docusaurus-sylk-init init <project_name> --json sylk.json --sylk-jsons-paths ./sylk/MyProject/sylk.json --sylk-docs-path ./sylkdocs --sidebar-path ./sidebarsSylkdocs.js --route-base-path sylkdocs
 ```
 
 Start the development server to view the sample fixtures. See the [configuration section](#configuration) for steps on introducing your own Protobuf workspace file.

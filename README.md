@@ -22,7 +22,7 @@ See [`docusaurus-sylk-init`](https://github.com/sylk/docusaurus-sylk/tree/master
 
 ### Demo
 
-<!-- ![Protodocs Overview](./screenshots/overview.png) -->
+![Protodocs Overview](./screenshots/overview.png)
 <!-- ![Service Sample](./screenshots/overview-service.png) -->
 
 Visit the [documentation site](https://docs.sylk.build/).
