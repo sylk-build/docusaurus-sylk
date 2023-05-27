@@ -1,6 +1,6 @@
 {
   "name": "docusaurus-sylk-init",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Create Docusaurus projects with Sylk preset enabled",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
