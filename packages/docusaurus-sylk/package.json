@@ -26,7 +26,7 @@
   "author": "Amit Shmulevitch",
   "license": "ISC",
   "dependencies": {
-    "docusaurus-protobuffet-plugin": "^0.0.3"
+    "docusaurus-sylk-plugin": "^0.0.4"
   },
   "devDependencies": {
     "@docusaurus/types": "^2.4.0"
