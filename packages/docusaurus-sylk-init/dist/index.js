@@ -58,8 +58,7 @@ function init(siteName) {
             }
             console.log('Installing docusaurus-sylk with recommended plugins.');
             try {
-                console.log(path_1.default.join(path_1.default.resolve(__dirname), '../', 'docusaurus-sylk'));
-                (0, child_process_1.execSync)("cd ".concat(siteName, " && npm install --save ").concat(path_1.default.resolve(__dirname), " "), { stdio: 'inherit' });
+                (0, child_process_1.execSync)("cd ".concat(siteName, " && npm install --save docusaurus-sylk"), { stdio: 'inherit' });
             }
             catch (err) {
                 console.log('Installation of Sylk preset failed.');
