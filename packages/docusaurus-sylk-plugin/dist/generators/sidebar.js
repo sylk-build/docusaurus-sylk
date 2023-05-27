@@ -28,7 +28,7 @@ var generateSidebarFileCategory = function (docFiles, apiName) {
     var index = {
         type: 'doc',
         label: 'Project',
-        id: fileDirectory.name
+        id: apiName
     };
     var items = sidebarObject.items ? sidebarObject.items : [];
     return {
