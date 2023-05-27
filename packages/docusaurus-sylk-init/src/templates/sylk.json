@@ -1,0 +1,409 @@
+{
+    "packages": {
+        "protos/v1/API.proto": {
+            "uri": "103367183836493333392.todoapp/public.API.v1",
+            "name": "API",
+            "package": "public.API.v1",
+            "messages": [
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.GetTodoRequest",
+                    "name": "GetTodoRequest",
+                    "fullName": "public.API.v1.GetTodoRequest",
+                    "description": "The passed query for methods",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.GetTodoRequest.todo_id",
+                            "name": "todo_id",
+                            "fullName": "public.API.v1.GetTodoRequest.todo_id",
+                            "description": "The todo ID to be fetched",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                },
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.DeleteTodoRequest",
+                    "name": "DeleteTodoRequest",
+                    "fullName": "public.API.v1.DeleteTodoRequest",
+                    "description": "Remove todo data by id",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.DeleteTodoRequest.id",
+                            "name": "id",
+                            "fullName": "public.API.v1.DeleteTodoRequest.id",
+                            "description": "The id of the todo to be removed",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                },
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.CreateTodoResponse",
+                    "name": "CreateTodoResponse",
+                    "fullName": "public.API.v1.CreateTodoResponse",
+                    "description": "Create new todo object response",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.CreateTodoResponse.id",
+                            "name": "id",
+                            "fullName": "public.API.v1.CreateTodoResponse.id",
+                            "description": "The new todo id",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                },
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.CreateTodoRequest",
+                    "name": "CreateTodoRequest",
+                    "fullName": "public.API.v1.CreateTodoRequest",
+                    "description": "Create new todo object request",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.CreateTodoRequest.todo",
+                            "name": "todo",
+                            "fullName": "public.API.v1.CreateTodoRequest.todo",
+                            "description": "Create new todo data",
+                            "fieldType": "TYPE_MESSAGE",
+                            "label": "LABEL_OPTIONAL",
+                            "messageType": "public.Todo.v1.Todo",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                },
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.GetTodoResponse",
+                    "name": "GetTodoResponse",
+                    "fullName": "public.API.v1.GetTodoResponse",
+                    "description": "The response object from service with the todo data",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.GetTodoResponse.data",
+                            "name": "data",
+                            "fullName": "public.API.v1.GetTodoResponse.data",
+                            "description": "The todo data",
+                            "fieldType": "TYPE_MESSAGE",
+                            "label": "LABEL_OPTIONAL",
+                            "messageType": "public.Todo.v1.Todo",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                },
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.DeleteTodoResponse",
+                    "name": "DeleteTodoResponse",
+                    "fullName": "public.API.v1.DeleteTodoResponse",
+                    "description": "Delete todo object response",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.DeleteTodoResponse.status",
+                            "name": "status",
+                            "fullName": "public.API.v1.DeleteTodoResponse.status",
+                            "description": "Should indicate \"OK\" if the todo is deleted properly",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                },
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.UpdateTodoRequest",
+                    "name": "UpdateTodoRequest",
+                    "fullName": "public.API.v1.UpdateTodoRequest",
+                    "description": "Remove todo data by id",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.UpdateTodoRequest.update",
+                            "name": "update",
+                            "fullName": "public.API.v1.UpdateTodoRequest.update",
+                            "description": "The update properties of the todo",
+                            "fieldType": "TYPE_MESSAGE",
+                            "label": "LABEL_OPTIONAL",
+                            "messageType": "google.protobuf.Struct",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                },
+                {
+                    "uri": "103367183836493333392.todoapp/public.API.v1.UpdateTodoResponse",
+                    "name": "UpdateTodoResponse",
+                    "fullName": "public.API.v1.UpdateTodoResponse",
+                    "description": "Update todo object response",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.API.v1.UpdateTodoResponse.status",
+                            "name": "status",
+                            "fullName": "public.API.v1.UpdateTodoResponse.status",
+                            "description": "Should indicate \"OK\" if the todo is updated properly",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                }
+            ],
+            "description": "The main entities of our application which represnets the schema of our buisness logic",
+            "type": "packages",
+            "dependencies": [
+                "public.Todo.v1",
+                "google.protobuf.Struct"
+            ]
+        },
+        "protos/v1/Todo.proto": {
+            "uri": "103367183836493333392.todoapp/public.Todo.v1",
+            "name": "Todo",
+            "package": "public.Todo.v1",
+            "messages": [
+                {
+                    "uri": "103367183836493333392.todoapp/public.Todo.v1.Todo",
+                    "name": "Todo",
+                    "fullName": "public.Todo.v1.Todo",
+                    "description": "The main entity of the todo application",
+                    "fields": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Todo.created_at",
+                            "name": "created_at",
+                            "fullName": "public.Todo.v1.Todo.created_at",
+                            "description": "The todo created_at timestamp",
+                            "fieldType": "TYPE_MESSAGE",
+                            "label": "LABEL_OPTIONAL",
+                            "messageType": "google.protobuf.Timestamp",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 1
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Todo.title",
+                            "name": "title",
+                            "fullName": "public.Todo.v1.Todo.title",
+                            "description": "The todo title",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 2
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Todo.due_date",
+                            "name": "due_date",
+                            "fullName": "public.Todo.v1.Todo.due_date",
+                            "description": "The todo due_date timestamp",
+                            "fieldType": "TYPE_MESSAGE",
+                            "label": "LABEL_OPTIONAL",
+                            "messageType": "google.protobuf.Timestamp",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 3
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Todo.status",
+                            "name": "status",
+                            "fullName": "public.Todo.v1.Todo.status",
+                            "description": "The todo status",
+                            "fieldType": "TYPE_ENUM",
+                            "label": "LABEL_OPTIONAL",
+                            "enumType": "public.Todo.v1.Statuses",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 4
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Todo.id",
+                            "name": "id",
+                            "fullName": "public.Todo.v1.Todo.id",
+                            "description": "The todo ID",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 5
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Todo.description",
+                            "name": "description",
+                            "fullName": "public.Todo.v1.Todo.description",
+                            "description": "The todo description",
+                            "fieldType": "TYPE_STRING",
+                            "label": "LABEL_OPTIONAL",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/field",
+                            "index": 6
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/message"
+                }
+            ],
+            "enums": [
+                {
+                    "uri": "103367183836493333392.todoapp/public.Todo.v1.Statuses",
+                    "name": "Statuses",
+                    "fullName": "public.Todo.v1.Statuses",
+                    "description": "The possible todo statuses",
+                    "values": [
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Statuses.UNKNOWN",
+                            "name": "UNKNOWN",
+                            "description": "The default value for enums must be the first enum value",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/enum_value"
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Statuses.DONE",
+                            "name": "DONE",
+                            "index": 1,
+                            "number": 1,
+                            "description": "When the todo is in DONE state",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/enum_value"
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Statuses.PENDING",
+                            "name": "PENDING",
+                            "index": 2,
+                            "number": 2,
+                            "description": "When the todo is in PENDING state",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/enum_value"
+                        },
+                        {
+                            "uri": "103367183836493333392.todoapp/public.Todo.v1.Statuses.OVER_DUE",
+                            "name": "OVER_DUE",
+                            "index": 3,
+                            "number": 3,
+                            "description": "When the todo is in OVER_DUE state",
+                            "type": "descriptor",
+                            "kind": "sylk.descriptor/enum_value"
+                        }
+                    ],
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/enum"
+                }
+            ],
+            "description": "The main entities of our application which represnets the schema of our buisness logic",
+            "type": "packages",
+            "dependencies": [
+                "google.protobuf.Timestamp"
+            ]
+        }
+    },
+    "services": {
+        "Todos": {
+            "uri": "103367183836493333392.todoapp/public.Todos.v1",
+            "name": "Todos",
+            "fullName": "public.Todos.v1",
+            "description": "The todos service which will interact with todo tasks list",
+            "methods": [
+                {
+                    "name": "GetTodo",
+                    "fullName": "public.Todos.v1.GetTodo",
+                    "description": "Get a todo",
+                    "inputType": "public.API.v1.GetTodoRequest",
+                    "outputType": "public.API.v1.GetTodoResponse",
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/method"
+                },
+                {
+                    "name": "CreateTodo",
+                    "fullName": "public.Todos.v1.CreateTodo",
+                    "description": "Creates a new todo",
+                    "inputType": "public.API.v1.CreateTodoRequest",
+                    "outputType": "public.API.v1.CreateTodoResponse",
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/method"
+                },
+                {
+                    "name": "UpdateTodo",
+                    "fullName": "public.Todos.v1.UpdateTodo",
+                    "description": "Update a todo",
+                    "inputType": "public.API.v1.UpdateTodoRequest",
+                    "outputType": "public.API.v1.UpdateTodoResponse",
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/method"
+                },
+                {
+                    "name": "DeleteTodo",
+                    "fullName": "public.Todos.v1.DeleteTodo",
+                    "description": "Remove a todo",
+                    "inputType": "public.API.v1.DeleteTodoRequest",
+                    "outputType": "public.API.v1.DeleteTodoResponse",
+                    "type": "descriptor",
+                    "kind": "sylk.descriptor/method"
+                }
+            ],
+            "type": "services",
+            "dependencies": [
+                "public.API.v1"
+            ]
+        }
+    },
+    "project": {
+        "uri": "/Users/amitshmulevitch/Projects/sylk/sylk-templates/TodoAppPy",
+        "name": "TodoAppPy",
+        "packageName": "todoapppy",
+        "clients": [
+            {
+                "language": "python",
+                "outDir": "/Users/amitshmulevitch/Projects/sylk/sylk-templates/TodoAppPy/clients/python"
+            },
+            {
+                "language": "nodejs",
+                "outDir": "/Users/amitshmulevitch/Projects/sylk/sylk-templates/TodoAppPy/clients/nodejs"
+            }
+        ],
+        "server": {
+            "language": "python"
+        },
+        "description": "Get started with Sylk and build a Todo app in minutes! Learn gRPC, HTTP2, and Protocol Buffers using Sylk cloud platform."
+    },
+    "configs": {
+        "host": "localhost",
+        "port": 44880,
+        "template": {
+            "name": "TodoAppPy",
+            "description": "Sample template for quick-start guide of sylk.build",
+            "author": "Amit Shmulevitch",
+            "includeCode": true,
+            "include": [
+                "services/Todos.py",
+                "server/server.py",
+                "test.py"
+            ]
+        }
+    }
+}

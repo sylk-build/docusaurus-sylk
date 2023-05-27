@@ -69,7 +69,7 @@ function init(siteName) {
             fs_1.default.mkdirSync("".concat(siteName, "/sylk"));
             fs_1.default.writeFileSync("".concat(siteName, "/sidebarsSylkdocs.js"), '');
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/docusaurus.config.js'), "".concat(siteName, "/docusaurus.config.js"));
-            fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/sylk.json'), "".concat(siteName, "/sylk/sylk.json"));
+            fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/sylk.json'), "".concat(siteName, "/sylk/TodoApp/sylk.json"));
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/landing_page.js'), "".concat(siteName, "/src/pages/index.js"));
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/landing_page.module.css'), "".concat(siteName, "/src/pages/styles.module.css"));
             fs_1.default.copyFileSync(path_1.default.resolve(__dirname, 'templates/logo.png'), "".concat(siteName, "/static/img/logo.png"));

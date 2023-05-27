@@ -108,7 +108,9 @@ module.exports = {
         'docusaurus-sylk',
         {
           sylk: {
-            sylkJsonPaths: './sylk/sylk.json',
+            sylkJsonPaths: [
+              './sylk/TodoApp/sylk.json'
+            ],
             sylkDocsPath: './sylkdocs',
           },
           docs: {

@@ -8,7 +8,7 @@ import { execSync } from 'child_process';
 const DEFAULT_TEMPLATE = 'classic';
 
 export default async function init(
-  siteName,
+  siteName: string,
 ) {
   console.log('Triggering @docusaurus/core project creation.');
 
@@ -35,7 +35,7 @@ export default async function init(
   fs.writeFileSync(`${siteName}/sidebarsSylkdocs.js`, '');
 
   fs.copyFileSync(path.resolve(__dirname, 'templates/docusaurus.config.js'), `${siteName}/docusaurus.config.js`);
-  fs.copyFileSync(path.resolve(__dirname, 'templates/sylk.json'), `${siteName}/sylk/sylk.json`);
+  fs.copyFileSync(path.resolve(__dirname, 'templates/sylk.json'), `${siteName}/sylk/TodoApp/sylk.json`);
   fs.copyFileSync(path.resolve(__dirname, 'templates/landing_page.js'), `${siteName}/src/pages/index.js`);
   fs.copyFileSync(path.resolve(__dirname, 'templates/landing_page.module.css'), `${siteName}/src/pages/styles.module.css`);
   fs.copyFileSync(path.resolve(__dirname, 'templates/logo.png'), `${siteName}/static/img/logo.png`);
