@@ -39,7 +39,7 @@ hide_title: true
 
 # Sylk Generated Docs
 
-${sylks.map(s => `[${s.project?.name}](${s.project?.name}/index)`).join('\n\n')}
+${sylks.map(s => `[${s.project?.name}](${s.project?.name})`).join('\n\n')}
 `)
 }
 
@@ -92,7 +92,7 @@ const generateDocFile = (resourceDescriptor: ResourceDescriptor): GeneratedDocFi
   fileContents: resourceDescriptor.resource.type === 'packages' 
     ? generateDocPackageContents(<SylkPackage>resourceDescriptor.resource) 
     : generateDocServiceContents(<SylkService>resourceDescriptor.resource),
-  fileName: `${resourceDescriptor.resource.type?.toUpperCase()}/${resourceDescriptor.resource.name}/${resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : resourceDescriptor.resource?.package?.split('.')[2]}`,
+  fileName: `${resourceDescriptor.resource.type}/${resourceDescriptor.resource.name}/${resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : resourceDescriptor.resource?.package?.split('.')[2]}`,
   resourceDescriptor,
 });
 

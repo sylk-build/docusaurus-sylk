@@ -21,7 +21,12 @@ export const generateSidebarFileCategory = (docFiles: GeneratedDocFile[],apiName
 
   const sidebarObject = convertDirectoryToSidebar(fileDirectory,apiName);
   const sidebarItems = sidebarObject.label == '/' ? sidebarObject.items : [sidebarObject];
-
+  const index: SidebarItem = {
+    type: 'doc',
+    label: 'Project',
+    id: fileDirectory.name
+  }
+  let items :any[] = sidebarObject.items ? sidebarObject.items : [];
   return {
     type: 'category',
     label: apiName,
@@ -29,7 +34,7 @@ export const generateSidebarFileCategory = (docFiles: GeneratedDocFile[],apiName
     //   type:'doc',
     //   id:`${apiName}/intro`
     // },
-    items: sidebarObject.items,
+    items: [index, ...items],
   };
 };
 
@@ -130,12 +135,7 @@ const convertDirectoryToSidebar = (fileDir: FileDirectory,apiName:string) => {
 
   // assign nested category items
   if (fileDir.nested) {
-    const index: SidebarItem = {
-      type: 'doc',
-      label: 'Project',
-      id: fileDir.name
-    }
-    sidebarItem.items?.push(index)
+    
     Object.keys(fileDir.nested).forEach(nestedKey => {
       const nested = fileDir.nested![nestedKey];
       const nestedSidebarItem = convertDirectoryToSidebar(nested,apiName);
