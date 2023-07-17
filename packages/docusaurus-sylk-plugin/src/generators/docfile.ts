@@ -60,7 +60,7 @@ ${sylkDescriptor.project?.goPackage ? '- Go Package: '+sylkDescriptor.project?.g
 **Clients** ${sylkDescriptor.project?.clients.map(c => sylkClientLanguagesToJSON(c.language)).join(', ')}
 
 ## Services
-The ${sylkDescriptor.project?.name} conssists of the services listed below:
+The ${sylkDescriptor.project?.name} consists of the services listed below:
 
 ***
 
@@ -200,14 +200,14 @@ ${service.methods.map((method, i) => (
   );
 }
 
-const generateServiceDetailsSectionMdx = (service: SylkService): string => {
+const generateServiceDetailsSectionMdx = (service: SylkService, apiName: string): string => {
   return (
-    `[\`${service.fullName}\`](services/${service.name}/${service.fullName.split('.').pop()}) - ${service.description}`
+    `[\`${service.fullName}\`](${apiName}/services/${service.name}/${service.fullName.split('.').pop()}) - ${service.description}`
   )
 }
 
-const generatePackageDetailsSectionMdx = (pack: SylkPackage): string => {
+const generatePackageDetailsSectionMdx = (pack: SylkPackage, apiName: string): string => {
   return (
-    `[\`${pack.package}\`](packages/${pack.name}/${pack.package.split('.').pop()}) - ${pack.description}`
+    `[\`${pack.package}\`](${apiName}/packages/${pack.name}/${pack.package.split('.').pop()}) - ${pack.description}`
   )
 }
