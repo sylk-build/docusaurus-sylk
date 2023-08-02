@@ -76,8 +76,10 @@ export default function plugin(
             let inlines:any = []
             Object.keys(fileJsonInput.packages).forEach(p => {
               const pkg = fileJsonInput.packages[p];
-              const inline_msgs = pkg.messages.filter((m:any) => m.inlines && m.inlines.length >0)
-              inline_msgs.map((m:any) => m.inlines.map((i:any) => inlines.push(i)))
+              if(pkg.messages) {
+                const inlineMsgs = pkg.messages.filter((m:any) => m.inlines && m.inlines.length >0)
+                inlineMsgs.map((m:any) => m.inlines.map((i:any) => inlines.push(i)))
+              }
             })
             // Validating sylk.json format
             validateSylkJson(sylkJson)

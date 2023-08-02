@@ -59,8 +59,10 @@ function plugin(context, options) {
                     var inlines = [];
                     Object.keys(fileJsonInput.packages).forEach(function (p) {
                         var pkg = fileJsonInput.packages[p];
-                        var inline_msgs = pkg.messages.filter(function (m) { return m.inlines && m.inlines.length > 0; });
-                        inline_msgs.map(function (m) { return m.inlines.map(function (i) { return inlines.push(i); }); });
+                        if (pkg.messages) {
+                            var inlineMsgs = pkg.messages.filter(function (m) { return m.inlines && m.inlines.length > 0; });
+                            inlineMsgs.map(function (m) { return m.inlines.map(function (i) { return inlines.push(i); }); });
+                        }
                     });
                     // Validating sylk.json format
                     validateSylkJson(sylkJson);
