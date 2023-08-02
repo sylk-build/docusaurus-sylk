@@ -14,5 +14,5 @@ export const shortenFileName = (fileName: string): string => {
   }
 
 export const getVersionFileName = (fullName: string): string => {
-  return <string>fullName.split('.').pop()
+  return fullName ? <string>fullName.split('.').pop() : fullName;
 }
