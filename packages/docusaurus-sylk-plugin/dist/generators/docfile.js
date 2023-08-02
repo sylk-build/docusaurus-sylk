@@ -90,10 +90,10 @@ var generateDocPackageContents = function (fileDescriptor, inlines) {
     // TODO: run through prettier for consistent formatting.
     var enumInlines = inlines === null || inlines === void 0 ? void 0 : inlines.filter(function (i) { return i['@type'].includes('SylkEnum'); }).map(function (i) { return SylkEnum_1.SylkEnum.fromPartial(i); });
     enumInlines = enumInlines && (enumInlines === null || enumInlines === void 0 ? void 0 : enumInlines.length) > 0 ? enumInlines : [];
-    return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(fileDescriptor.package), "\nhide_title: true\n---\nimport { SylkMessageProto, SylkEnumProto, FileLink } from '@theme/SylkProto/SylkProto';\n\n# `").concat((0, utils_1.getLeafFileName)(fileDescriptor.name), "`\n_**path** ").concat(fileDescriptor.name, "_\n\n_**package** ").concat(fileDescriptor.package, "_\n\n").concat(fileDescriptor.description, "\n\n---\n\n").concat([
+    return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(fileDescriptor.package), "\nhide_title: true\n---\nimport { SylkMessageProto, SylkEnumProto, FileLink } from '@theme/SylkProto/SylkProto';\nimport { ProtoServiceMethod } from '@theme/SylkProject';\n\n# `").concat((0, utils_1.getLeafFileName)(fileDescriptor.name), "`\n_**path** ").concat(fileDescriptor.name, "_\n\n_**package** ").concat(fileDescriptor.package, "_\n\n").concat(fileDescriptor.description, "\n\n---\n\n").concat([
+        generateServiceSectionMdx(__spreadArray([], fileDescriptor.services, true)),
         generateMessageSectionMdx(fileDescriptor.messages, fileDescriptor.dependencies),
         generateEnumSectionMdx(__spreadArray(__spreadArray([], fileDescriptor.enums, true), enumInlines, true)),
-        generateServiceSectionMdx(__spreadArray([], fileDescriptor.services, true)),
     ].filter(Boolean).map(function (section) { return section + "\n---\n"; }).join(""), "\n\n  "));
 };
 var generateMessageSectionMdx = function (messages, dependencies) {
