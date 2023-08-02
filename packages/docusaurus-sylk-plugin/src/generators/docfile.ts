@@ -141,6 +141,7 @@ ${
   [
     generateMessageSectionMdx(fileDescriptor.messages,fileDescriptor.dependencies),
     generateEnumSectionMdx([...fileDescriptor.enums,...enumInlines]),
+    generateServiceSectionMdx([...fileDescriptor.services]),
   ].filter(Boolean).map(section => section + "\n---\n").join("")
 }
 
