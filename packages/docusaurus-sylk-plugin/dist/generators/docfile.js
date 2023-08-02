@@ -62,7 +62,7 @@ var generateDocSylkContents = function (sylks, sylkDocsPath) {
 };
 var generateDocProjectContents = function (sylkDescriptor, sylkRoutePath) {
     var _a, _b, _c, _d, _e, _f, _g;
-    return ("---\ntitle: ".concat((0, utils_1.getLeafFileName)(sylkDescriptor.project ? sylkDescriptor.project.name : 'Sylk'), "\nhide_title: true\n---\n\n# ").concat((0, utils_1.getLeafFileName)(sylkDescriptor.project ? sylkDescriptor.project.name : 'Sylk'), " Docs\n\n**Project Package** ").concat((_a = sylkDescriptor.project) === null || _a === void 0 ? void 0 : _a.packageName, "\n").concat(((_b = sylkDescriptor.project) === null || _b === void 0 ? void 0 : _b.goPackage) ? '- Go Package: ' + ((_c = sylkDescriptor.project) === null || _c === void 0 ? void 0 : _c.goPackage) : '', "\n\n**Server** ").concat((0, SylkServer_1.sylkServerLanguagesToJSON)((_e = (_d = sylkDescriptor.project) === null || _d === void 0 ? void 0 : _d.server) === null || _e === void 0 ? void 0 : _e.language), "\n\n**Clients** ").concat((_f = sylkDescriptor.project) === null || _f === void 0 ? void 0 : _f.clients.map(function (c) { return (0, SylkClient_1.sylkClientLanguagesToJSON)(c.language); }).join(', '), "\n\n## Packages\nThe ").concat((_g = sylkDescriptor.project) === null || _g === void 0 ? void 0 : _g.name, " schema is listed below:\n\n***\n\n").concat(Object.keys(sylkDescriptor.packages).map(function (pkg) { var _a; return '\n\n### ' + ((_a = pkg.split('/').pop()) === null || _a === void 0 ? void 0 : _a.split('.')[0]) + '\n' + generatePackageDetailsSectionMdx(sylkDescriptor.packages[pkg], sylkRoutePath); }).join(""), "\n\n"));
+    return ("---\ntitle: ".concat((0, utils_1.getLeafFileName)(sylkDescriptor.project ? sylkDescriptor.project.name : 'Sylk'), "\nhide_title: true\n---\n\n# ").concat((0, utils_1.getLeafFileName)(sylkDescriptor.project ? sylkDescriptor.project.name : 'Sylk'), " Docs\n\n**Project Package** ").concat((_a = sylkDescriptor.project) === null || _a === void 0 ? void 0 : _a.packageName, "\n").concat(((_b = sylkDescriptor.project) === null || _b === void 0 ? void 0 : _b.goPackage) ? '- Go Package: ' + ((_c = sylkDescriptor.project) === null || _c === void 0 ? void 0 : _c.goPackage) : '', "\n\n**Server** ").concat((0, SylkServer_1.sylkServerLanguagesToJSON)((_e = (_d = sylkDescriptor.project) === null || _d === void 0 ? void 0 : _d.server) === null || _e === void 0 ? void 0 : _e.language), "\n\n**Clients** ").concat((_f = sylkDescriptor.project) === null || _f === void 0 ? void 0 : _f.clients.map(function (c) { return (0, SylkClient_1.sylkClientLanguagesToJSON)(c.language); }).join(', '), "\n\n## Packages\nThe ").concat((_g = sylkDescriptor.project) === null || _g === void 0 ? void 0 : _g.name, " schema is listed below:\n\n***\n\n").concat(Object.keys(sylkDescriptor.packages).map(function (pkg) { return '\n\n### ' + sylkDescriptor.packages[pkg].name + '\n' + generatePackageDetailsSectionMdx(sylkDescriptor.packages[pkg], sylkRoutePath); }).join(""), "\n\n"));
 };
 var generateSylkDocFiles = function (sylkDescriptor, inlines) {
     var packages = sylkDescriptor.packages;
@@ -72,7 +72,7 @@ exports.generateSylkDocFiles = generateSylkDocFiles;
 var generateDocFile = function (resourceDescriptor) {
     var _a, _b;
     return ({
-        fileContents: resourceDescriptor.resource.type === 'package'
+        fileContents: resourceDescriptor.resource.type === 'package' || resourceDescriptor.resource.type === 'packages'
             ? generateDocPackageContents(resourceDescriptor.resource, resourceDescriptor.inlines)
             : generateDocServiceContents(resourceDescriptor.resource),
         fileName: "".concat(resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.').slice(1).join('/') : (_b = (_a = resourceDescriptor.resource) === null || _a === void 0 ? void 0 : _a.package) === null || _b === void 0 ? void 0 : _b.split('.').slice(1).join('/')),
@@ -80,7 +80,7 @@ var generateDocFile = function (resourceDescriptor) {
     });
 };
 var generateDocServiceContents = function (serviceDescriptor) {
-    return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(serviceDescriptor.fullName), "\nhide_title: true\n---\nimport { SylkMethodsProto } from '@theme/SylkProto/SylkProto';\n\n# `").concat((0, utils_1.getLeafFileName)(serviceDescriptor.name), "`\n\n**Full Name** ").concat(serviceDescriptor.fullName, "\n\n<SylkMethodsProto dependencies={").concat(JSON.stringify(serviceDescriptor.dependencies), "} methods={").concat(JSON.stringify(serviceDescriptor.methods), "} />\n"));
+    return ("---\ntitle: ".concat((0, utils_1.getLeafFileName)(serviceDescriptor.name), "\nhide_title: true\n---\nimport { SylkMethodsProto } from '@theme/SylkProto/SylkProto';\n\n# `").concat((0, utils_1.getLeafFileName)(serviceDescriptor.name), "`\n\n**Full Name** ").concat(serviceDescriptor.fullName, "\n\n<SylkMethodsProto dependencies={").concat(JSON.stringify(serviceDescriptor.dependencies), "} methods={").concat(JSON.stringify(serviceDescriptor.methods), "} />\n"));
 };
 var _decodeEnum = function (enm) {
     var encodeCache = SylkEnum_1.SylkEnum.decode(enm.value);

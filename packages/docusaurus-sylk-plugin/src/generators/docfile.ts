@@ -72,7 +72,7 @@ The ${sylkDescriptor.project?.name} schema is listed below:
 
 ***
 
-${Object.keys(sylkDescriptor.packages).map(pkg => '\n\n### '+pkg.split('/').pop()?.split('.')[0] + '\n'+generatePackageDetailsSectionMdx(sylkDescriptor.packages[pkg],sylkRoutePath) ).join("")}
+${Object.keys(sylkDescriptor.packages).map(pkg => '\n\n### '+sylkDescriptor.packages[pkg].name + '\n'+generatePackageDetailsSectionMdx(sylkDescriptor.packages[pkg],sylkRoutePath) ).join("")}
 
 `
   )
@@ -88,7 +88,7 @@ export const generateSylkDocFiles = (sylkDescriptor: SylkJson, inlines: any[]): 
 
 
 const generateDocFile = (resourceDescriptor: ResourceDescriptor): GeneratedDocFile => ({
-  fileContents: resourceDescriptor.resource.type === 'package' 
+  fileContents: resourceDescriptor.resource.type === 'package' || resourceDescriptor.resource.type === 'packages' 
     ? generateDocPackageContents(<SylkPackage>resourceDescriptor.resource,resourceDescriptor.inlines) 
     : generateDocServiceContents(<SylkService>resourceDescriptor.resource),
   fileName: `${resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.').slice(1).join('/') : resourceDescriptor.resource?.package?.split('.').slice(1).join('/')}`,
@@ -98,7 +98,7 @@ const generateDocFile = (resourceDescriptor: ResourceDescriptor): GeneratedDocFi
 const generateDocServiceContents = (serviceDescriptor: SylkService): string => {
   return (
     `---
-title: ${getVersionFileName(serviceDescriptor.fullName)}
+title: ${getLeafFileName(serviceDescriptor.name)}
 hide_title: true
 ---
 import { SylkMethodsProto } from '@theme/SylkProto/SylkProto';
