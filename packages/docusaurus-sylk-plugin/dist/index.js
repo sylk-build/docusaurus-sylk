@@ -7,7 +7,7 @@ exports.validateOptions = void 0;
 var fs_1 = require("fs");
 var path_1 = __importDefault(require("path"));
 var generators_1 = require("./generators");
-var sylk_1 = require("./sylk");
+var Sylk_1 = require("./sylk/protos/sylk/Sylk/v2/Sylk");
 function validateOptions(_a) {
     var options = _a.options, validate = _a.validate;
     var sylkJsonPaths = options.sylkJsonPaths, sylkDocsPath = options.sylkDocsPath, sidebarPath = options.sidebarPath;
@@ -36,9 +36,10 @@ var validateSylkJson = function (json) {
     if (json.packages === undefined || Object.keys(json.packages).length === 0) {
         throw new Error('Error in sylk.json: missing "packages" property data.');
     }
-    if (json.services === undefined || Object.keys(json.services).length === 0) {
-        throw new Error('Error in sylk.json: missing "services" property data.');
-    }
+    // deprecated
+    // if (json.services === undefined || Object.keys(json.services).length === 0) {
+    //   throw new Error('Error in sylk.json: missing "services" property data.');
+    // }
 };
 function plugin(context, options) {
     return {
@@ -54,12 +55,18 @@ function plugin(context, options) {
                     var _a;
                     // read file sylk JSON file
                     var fileJsonInput = JSON.parse((0, fs_1.readFileSync)(sylkJsonPath).toString());
-                    var sylkJson = sylk_1.Sylk.SylkJson.fromJSON(fileJsonInput);
+                    var sylkJson = Sylk_1.SylkJson.fromJSON(fileJsonInput);
+                    var inlines = [];
+                    Object.keys(fileJsonInput.packages).forEach(function (p) {
+                        var pkg = fileJsonInput.packages[p];
+                        var inline_msgs = pkg.messages.filter(function (m) { return m.inlines && m.inlines.length > 0; });
+                        inline_msgs.map(function (m) { return m.inlines.map(function (i) { return inlines.push(i); }); });
+                    });
                     // Validating sylk.json format
                     validateSylkJson(sylkJson);
                     sylkJsons.push(sylkJson);
                     // generate markdown files for each in fileDescriptors
-                    var docFiles = (0, generators_1.generateSylkDocFiles)(sylkJson);
+                    var docFiles = (0, generators_1.generateSylkDocFiles)(sylkJson, inlines);
                     // write files to appropriate directories
                     docFiles.forEach(function (docFile) {
                         var _a;
@@ -73,10 +80,10 @@ function plugin(context, options) {
                     sidebarSylkContents.push((0, generators_1.generateSidebarFileCategory)(docFiles, (_a = sylkJson.project) === null || _a === void 0 ? void 0 : _a.name));
                 });
                 // generate sidebar object for all files
-                var sidebarFileContents = (0, generators_1.generateSidebarFileContents)(sidebarSylkContents);
+                var sidebarFileContents = (0, generators_1.generateSidebarFileContents)(options.sylkDocsPath, sidebarSylkContents);
                 // write sidebar object
                 (0, fs_1.writeFileSync)(options.sidebarPath, sidebarFileContents);
-                var sylkIntro = (0, generators_1.generateSylkIntroFile)(sylkJsons, options.sylkDocsPath);
+                var sylkIntro = (0, generators_1.generateSylkIntroFile)(sylkJsons, options.sylkDocsPath, options.routeBasePath);
                 sylkIntro.forEach(function (json) {
                     var sylkIntroFilename = "".concat(options.sylkDocsPath, "/").concat(json.fileName, ".mdx");
                     var sylkIntroFileDir = path_1.default.dirname(sylkIntroFilename);

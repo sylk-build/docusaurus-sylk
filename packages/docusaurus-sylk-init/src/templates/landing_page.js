@@ -30,7 +30,7 @@ const features = [
     title: 'Modern Technologies',
     description: (
       <>
-        Built as an extension of the Docusaurus platform, Protobuffet
+        Built as an extension of the Docusaurus platform, Sylk
         follows industry standards and best practices. Emphasis on developer-driven,
         extensible documentation.
       </>
@@ -64,7 +64,7 @@ export default function Home() {
       <header className={clsx('hero', styles.heroBanner)}>
         <div className={clsx('container', styles.heroBannerInner)}>
           <h1 className={clsx('hero__title', styles.heroTitleTextHtml)}>
-            Sylk build plugin for <b>building</b> your <b>schema</b> documentation
+            Sylk plugin for <b>building</b> your <b>schema</b> documentation
           </h1>
           <div className={styles.buttons}>
             <Link

@@ -3,8 +3,7 @@ import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from 'f
 import path from 'path';
 
 import { generateSylkDocFiles, generateSidebarFileContents, generateSylkIntroFile, generateSidebarFileCategory } from './generators';
-import { Sylk } from './sylk';
-import { SylkJson } from "./sylk/protos/Sylk";
+import { SylkJson } from "./sylk/protos/sylk/Sylk/v2/Sylk";
 import { GeneratedDocFile } from "./types";
 
 export interface PluginOptions {
@@ -26,7 +25,6 @@ export function validateOptions({ options, validate }: { options: PluginOptions,
   const isValidSylkJsons = sylkJsonPaths.map(p => p.includes('sylk.json')).find(p => p === false) !== undefined
   const isFilesExists = sylkJsonPaths.map(p => existsSync(p)).find(p => p === false) !== undefined
   if (!sylkJsonPaths || sylkJsonPaths.length === 0 || isFilesExists || isValidSylkJsons ) {
-
     throw new Error(`Expected sylkJsonPaths option to reference a present file. Check your path: ${sylkJsonPaths}`);
   }
 
@@ -43,16 +41,17 @@ export function validateOptions({ options, validate }: { options: PluginOptions,
   return options;
 };
 
-const validateSylkJson = function(json:Sylk.SylkJson) {
+const validateSylkJson = function(json:SylkJson) {
   if(json.project === undefined) {
     throw new Error('Error in sylk.json: missing "project" property data.');
   }
   if (json.packages === undefined || Object.keys(json.packages).length === 0) {
     throw new Error('Error in sylk.json: missing "packages" property data.');
   }
-  if (json.services === undefined || Object.keys(json.services).length === 0) {
-    throw new Error('Error in sylk.json: missing "services" property data.');
-  }
+  // deprecated
+  // if (json.services === undefined || Object.keys(json.services).length === 0) {
+  //   throw new Error('Error in sylk.json: missing "services" property data.');
+  // }
 }
 
 export default function plugin(
@@ -72,14 +71,20 @@ export default function plugin(
           options.sylkJsonPaths.forEach(sylkJsonPath => {
             // read file sylk JSON file
             const fileJsonInput = JSON.parse(readFileSync(sylkJsonPath).toString());
-            const sylkJson = Sylk.SylkJson.fromJSON(fileJsonInput)
-            
+            const sylkJson = SylkJson.fromJSON(fileJsonInput)
+
+            let inlines:any = []
+            Object.keys(fileJsonInput.packages).forEach(p => {
+              const pkg = fileJsonInput.packages[p];
+              const inline_msgs = pkg.messages.filter((m:any) => m.inlines && m.inlines.length >0)
+              inline_msgs.map((m:any) => m.inlines.map((i:any) => inlines.push(i)))
+            })
             // Validating sylk.json format
             validateSylkJson(sylkJson)
             sylkJsons.push(sylkJson)
 
             // generate markdown files for each in fileDescriptors
-            const docFiles = generateSylkDocFiles(sylkJson);
+            const docFiles = generateSylkDocFiles(sylkJson,inlines);
             // write files to appropriate directories
             docFiles.forEach((docFile:GeneratedDocFile) => {
               const fileName = `${options.sylkDocsPath}/${sylkJson.project?.name}/${docFile.fileName}.mdx`;
@@ -95,11 +100,11 @@ export default function plugin(
           });
 
           // generate sidebar object for all files
-          const sidebarFileContents = generateSidebarFileContents(sidebarSylkContents);
+          const sidebarFileContents = generateSidebarFileContents(options.sylkDocsPath,sidebarSylkContents);
           // write sidebar object
           writeFileSync(options.sidebarPath, sidebarFileContents);
 
-          const sylkIntro = generateSylkIntroFile(sylkJsons,options.sylkDocsPath);
+          const sylkIntro = generateSylkIntroFile(sylkJsons, options.sylkDocsPath, options.routeBasePath);
           sylkIntro.forEach(json => {
             let sylkIntroFilename = `${options.sylkDocsPath}/${json.fileName}.mdx`;
             const sylkIntroFileDir = path.dirname(sylkIntroFilename);

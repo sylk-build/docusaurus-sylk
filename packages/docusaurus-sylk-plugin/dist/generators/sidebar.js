@@ -10,15 +10,15 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateSidebarFileCategory = exports.generateSidebarFileContents = void 0;
-var generateSidebarFileContents = function (sidebarItems) {
+var generateSidebarFileContents = function (docsPath, sidebarItems) {
     // TODO: run through prettier for consistent formatting.
-    return "\nmodule.exports = ".concat(JSON.stringify(generateSidebarObject(sidebarItems), null, 2), ";\n  ");
+    return "\nmodule.exports = ".concat(JSON.stringify(generateSidebarObject(docsPath, sidebarItems), null, 2), ";\n  ");
 };
 exports.generateSidebarFileContents = generateSidebarFileContents;
-var generateSidebarObject = function (sidebarItems) {
-    return {
-        sylkdocs: __spreadArray([], sidebarItems, true)
-    };
+var generateSidebarObject = function (docsPath, sidebarItems) {
+    var sidebarContents = {};
+    sidebarContents[docsPath] = __spreadArray([], sidebarItems, true);
+    return sidebarContents;
 };
 var generateSidebarFileCategory = function (docFiles, apiName) {
     var fileDirectory = buildFileDirectory(docFiles);
@@ -104,7 +104,6 @@ var convertDirectoryToSidebar = function (fileDir, apiName) {
     var _b;
     // construct category
     var nestedResourceType = fileDir.files ? (_b = fileDir.files[0].resourceDescriptor) === null || _b === void 0 ? void 0 : _b.resource.type : 'sylkRoot';
-    // console.log(fileDir.files?.map(f => f.resourceDescriptor?.resource.fullName?.split('.').pop()?.split('v')[1]))
     var sidebarItem = {
         type: 'category',
         label: fileDir.name,

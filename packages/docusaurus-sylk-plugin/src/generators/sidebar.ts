@@ -1,18 +1,18 @@
 import { GeneratedDocFile } from '../types';
 
-export const generateSidebarFileContents = (sidebarItems:any): string => {
+export const generateSidebarFileContents = (docsPath: string, sidebarItems:any): string => {
   // TODO: run through prettier for consistent formatting.
   return `
-module.exports = ${JSON.stringify(generateSidebarObject(sidebarItems),null,2)};
+module.exports = ${JSON.stringify(generateSidebarObject(docsPath,sidebarItems),null,2)};
   `
 };
 
-const generateSidebarObject = (sidebarItems:any) => {
-  return {
-    sylkdocs: [
-      ...sidebarItems
-    ]
-  };
+const generateSidebarObject = (docsPath: string,sidebarItems:any) => {
+  let sidebarContents:any = {}
+  sidebarContents[docsPath] = [
+    ...sidebarItems
+  ];
+  return sidebarContents;
 }
 
 export const generateSidebarFileCategory = (docFiles: GeneratedDocFile[],apiName:string)  => {
@@ -120,7 +120,6 @@ const compactFileDirectory = (fileDir: FileDirectory) => {
 const convertDirectoryToSidebar = (fileDir: FileDirectory,apiName:string) => {
   // construct category
   const nestedResourceType = fileDir.files ? fileDir.files[0].resourceDescriptor?.resource.type : 'sylkRoot'
-  // console.log(fileDir.files?.map(f => f.resourceDescriptor?.resource.fullName?.split('.').pop()?.split('v')[1]))
   const sidebarItem: SidebarItem = {
     type: 'category',
     label: fileDir.name,

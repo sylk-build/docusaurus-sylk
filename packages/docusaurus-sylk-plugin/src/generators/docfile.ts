@@ -1,30 +1,38 @@
-import { SylkJson } from '../sylk/protos/Sylk';
-import { sylkClientLanguagesToJSON } from '../sylk/protos/SylkClient';
-import { SylkEnum } from '../sylk/protos/SylkEnum';
-import { SylkMessage } from '../sylk/protos/SylkMessage';
-import { SylkPackage } from '../sylk/protos/SylkPackage';
-import { SylkProject } from '../sylk/protos/SylkProject';
-import { SylkServerLanguages, sylkServerLanguagesToJSON } from '../sylk/protos/SylkServer';
-import { SylkService } from '../sylk/protos/SylkService';
+import { Any } from '../sylk/protos/google/protobuf/any';
+import { SylkJson } from '../sylk/protos/sylk/Sylk/v2/Sylk';
+import { sylkClientLanguagesToJSON } from '../sylk/protos/sylk/SylkClient/v1/SylkClient';
+import { SylkEnum } from '../sylk/protos/sylk/SylkEnum/v2/SylkEnum';
+import { SylkMessage } from '../sylk/protos/sylk/SylkMessage/v2/SylkMessage';
+import { SylkPackage } from '../sylk/protos/sylk/SylkPackage/v2/SylkPackage';
+import { SylkProject } from '../sylk/protos/sylk/SylkProject/v1/SylkProject';
+import { SylkServerLanguages, sylkServerLanguagesToJSON } from '../sylk/protos/sylk/SylkServer/v1/SylkServer';
+import { SylkService } from '../sylk/protos/sylk/SylkService/v2/SylkService';
 import { Enum, SylkDescriptor, ResourceDescriptor, GeneratedDocFile, Message, Service } from '../types';
 import { getLeafFileName, getVersionFileName } from '../utils';
 
-const listify = (obj:any, mapFn:(k:any,v:any) => any) =>
+const listify = (obj:any, mapFn:(k:any,v:any) => any, inlines?:any[]) =>
   Object.entries(obj).reduce((acc:any, [k, v]) => {
-    acc.push(mapFn(k, v));
+    acc.push({...mapFn(k, v), inlines: inlines?.filter(i => i.fullName.includes(k.replace('/','.')))});
     return acc;
 }, []);
 
-export const generateSylkIntroFile = (sylkDescriptor: SylkJson[], sylkDocsPath: string): GeneratedDocFile[] => {
-  return generateSylkProjectInro(sylkDescriptor,sylkDocsPath)
+export const generateSylkIntroFile = (sylkDescriptor: SylkJson[], sylkDocsPath: string, sylkRoutePath: string): GeneratedDocFile[] => {
+  return generateSylkProjectInro(sylkDescriptor,sylkDocsPath,sylkRoutePath)
 }
 
-const generateSylkProjectInro = (sylkDescriptors: SylkJson[], sylkDocsPath: string): GeneratedDocFile[] => ([
+const parseFileName = (resource: any) => {
+  let resourcePath = resource.fullName.split('.').slice(0,resource.fullName.split('.').length - 1)
+  resourcePath = resourcePath.join('/')
+  const fileName = resource.tag ? resource.tag : resource.fullName.split('.')[resource.fullName.split('.').length - 2]
+  return `Proto File: [${resourcePath}/${fileName}.proto](${resourcePath})`
+}
+
+const generateSylkProjectInro = (sylkDescriptors: SylkJson[], sylkDocsPath: string, sylkRoutePath: string): GeneratedDocFile[] => ([
 {
   fileContents: generateDocSylkContents(sylkDescriptors,sylkDocsPath),
   fileName: 'index',
 },...sylkDescriptors.map(sylk => ({
-  fileContents: generateDocProjectContents(sylk),
+  fileContents: generateDocProjectContents(sylk,sylkRoutePath),
   fileName: `${sylk.project?.name}/index`,
   resourceDescriptor: {
     resource: <SylkProject>sylk.project
@@ -39,11 +47,11 @@ hide_title: true
 
 # Sylk Generated Docs
 
-${sylks.map(s => `[${s.project?.name}](${sylkDocsPath}/${s.project?.name})`).join('\n\n')}
+${sylks.map(s => `[${s.project?.name}](./${s.project?.name}/index)`).join('\n\n')}
 `)
 }
 
-const generateDocProjectContents = (sylkDescriptor: SylkJson): string => {
+const generateDocProjectContents = (sylkDescriptor: SylkJson, sylkRoutePath: string): string => {
   return (
     `---
 title: ${getLeafFileName(sylkDescriptor.project ? sylkDescriptor.project.name : 'Sylk')}
@@ -59,40 +67,31 @@ ${sylkDescriptor.project?.goPackage ? '- Go Package: '+sylkDescriptor.project?.g
 
 **Clients** ${sylkDescriptor.project?.clients.map(c => sylkClientLanguagesToJSON(c.language)).join(', ')}
 
-## Services
-The ${sylkDescriptor.project?.name} consists of the services listed below:
-
-***
-
-${Object.keys(sylkDescriptor.services).map(svc => '\n\n### '+svc+'\n'+generateServiceDetailsSectionMdx(sylkDescriptor.services[svc])).join("")}
-
 ## Packages
 The ${sylkDescriptor.project?.name} schema is listed below:
 
 ***
 
-${Object.keys(sylkDescriptor.packages).map(pkg => '\n\n### '+pkg.split('/').pop()?.split('.')[0] + '\n'+generatePackageDetailsSectionMdx(sylkDescriptor.packages[pkg]) ).join("")}
+${Object.keys(sylkDescriptor.packages).map(pkg => '\n\n### '+pkg.split('/').pop()?.split('.')[0] + '\n'+generatePackageDetailsSectionMdx(sylkDescriptor.packages[pkg],sylkRoutePath) ).join("")}
 
 `
   )
 }
  
 
-export const generateSylkDocFiles = (sylkDescriptor: SylkJson): GeneratedDocFile[] => {
-  const { packages, services }  = sylkDescriptor;
-  
+export const generateSylkDocFiles = (sylkDescriptor: SylkJson, inlines: any[]): GeneratedDocFile[] => {
+  const { packages }  = sylkDescriptor;
   return [
-    ...listify(packages, (key, value) => ({ resource: {...value} })),
-    ...listify(services, (key, value) => ({ resource: {...value} }))
+    ...listify(packages, (key, value) => ({ resource: {...value} }), inlines),
   ].map(generateDocFile);
 };
 
 
 const generateDocFile = (resourceDescriptor: ResourceDescriptor): GeneratedDocFile => ({
-  fileContents: resourceDescriptor.resource.type === 'packages' 
-    ? generateDocPackageContents(<SylkPackage>resourceDescriptor.resource) 
+  fileContents: resourceDescriptor.resource.type === 'package' 
+    ? generateDocPackageContents(<SylkPackage>resourceDescriptor.resource,resourceDescriptor.inlines) 
     : generateDocServiceContents(<SylkService>resourceDescriptor.resource),
-  fileName: `${resourceDescriptor.resource.type}/${resourceDescriptor.resource.name}/${resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.')[2] : resourceDescriptor.resource?.package?.split('.')[2]}`,
+  fileName: `${resourceDescriptor.resource.fullName ? resourceDescriptor.resource.fullName.split('.').slice(1).join('/') : resourceDescriptor.resource?.package?.split('.').slice(1).join('/')}`,
   resourceDescriptor,
 });
 
@@ -113,14 +112,21 @@ import { SylkMethodsProto } from '@theme/SylkProto/SylkProto';
   )
 }
 
-const generateDocPackageContents = (fileDescriptor: SylkPackage): string => {
+const _decodeEnum = (enm: any): SylkEnum => {
+  let encodeCache = SylkEnum.decode(enm.value);
+  return encodeCache
+}
+
+const generateDocPackageContents = (fileDescriptor: SylkPackage,inlines?:any[]): string => {
   // TODO: run through prettier for consistent formatting.
+  let enumInlines = inlines?.filter(i => i['@type'].includes('SylkEnum')).map(i => SylkEnum.fromPartial(i))
+  enumInlines = enumInlines && enumInlines?.length>0 ? enumInlines : []
   return (
   `---
 title: ${getVersionFileName(fileDescriptor.package)}
 hide_title: true
 ---
-import { SylkMessageProto, SylkEnumProto } from '@theme/SylkProto/SylkProto';
+import { SylkMessageProto, SylkEnumProto, FileLink } from '@theme/SylkProto/SylkProto';
 
 # \`${getLeafFileName(fileDescriptor.name)}\`
 _**path** ${fileDescriptor.name}_
@@ -134,7 +140,7 @@ ${fileDescriptor.description}
 ${
   [
     generateMessageSectionMdx(fileDescriptor.messages,fileDescriptor.dependencies),
-    generateEnumSectionMdx(fileDescriptor.enums),
+    generateEnumSectionMdx([...fileDescriptor.enums,...enumInlines]),
   ].filter(Boolean).map(section => section + "\n---\n").join("")
 }
 
@@ -152,6 +158,7 @@ const generateMessageSectionMdx = (messages: SylkMessage[],dependencies:string[]
 ${messages.map((message, i) => (
 `
 ### \`${message.name}\`
+${parseFileName(message)}
 <SylkMessageProto packageDep={${JSON.stringify(dependencies)}} key={${i}} message={${JSON.stringify(message)}} />
 `
 )).join("\n")}`
@@ -162,13 +169,13 @@ const generateEnumSectionMdx = (enums: SylkEnum[]): string|null => {
   if (enums.length == 0) {
     return null;
   }
-
   return (
     `## Enums
 
 ${enums.map((enumb, i) => (
 `
 ### \`${enumb.name}\`
+${parseFileName(enumb)}
 <SylkEnumProto key={${i}} enumb={${JSON.stringify(enumb)}} />
 `
 )).join("\n")}`
@@ -186,6 +193,7 @@ const generateServiceSectionMdx = (services: SylkService[]): string|null => {
 ${services.map((service, i) => (
 `
 ### \`${service.name}\`
+${parseFileName(service)}
 
 ${service.description}
 
@@ -208,6 +216,6 @@ const generateServiceDetailsSectionMdx = (service: SylkService, apiName: string)
 
 const generatePackageDetailsSectionMdx = (pack: SylkPackage, apiName: string): string => {
   return (
-    `[\`${pack.package}\`](${apiName}/packages/${pack.name}/${pack.package.split('.').pop()}) - ${pack.description}`
+    `[\`${pack.package}\`](./${pack.package.split('.').slice(1).join('/')}) - ${pack.description}`
   )
 }

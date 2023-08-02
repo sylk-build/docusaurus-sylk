@@ -37,7 +37,7 @@ export default async function init(
   let sidebarPath = 'sidebarsSylkdocs.js'
   let routeBasePath = 'sylkdocs'
   if(options) {
-    
+    console.log(options)
     json = fs.readFileSync(options.json,{
       encoding:'utf-8'
     })
@@ -45,18 +45,24 @@ export default async function init(
     if(json) {
       json = JSON.parse(json)
     }
-
+    
     if(!options.sylkDocsPath) {
       console.log(`warning: "sylkDocsPath" is not specified at execution of docusaurus-sylk-init\n- Fallback to defualt value: "${sylkDocsPath}"`)
-    } 
-
-    options.sylkJsonsPaths.forEach((sylkJson:string) => {
-      jsonsToServe.push(sylkJson)
-    })
+    } else {
+      sylkDocsPath = options.sylkDocsPath
+    }
+    
+    // if(options.sylkJsonPaths) {
+      //   options.sylkJsonPaths.forEach((sylkJson:string) => {
+        //     jsonsToServe.push(sylkJson)
+        //   })
+        // }
+        
 
     if (options.routeBasePath) {
       routeBasePath = options.routeBasePath;
     }
+    jsonsToServe.push(`./${sylkDocsPath}/${json.project.packageName}/sylk.json`)
  
   } else {
     fs.copyFileSync(path.resolve(__dirname, 'templates/docusaurus.config.js'), `${siteName}/docusaurus.config.js`);
@@ -64,16 +70,16 @@ export default async function init(
   }
 
   fs.mkdirSync(`${siteName}/${sylkDocsPath}`);
-  fs.mkdirSync(`${siteName}/sylk`);
+  // fs.mkdirSync(`${siteName}/sylk`);
 
   jsonsToServe.forEach((sylkJson:string) => {
     let prjName = sylkJson.split('/')[2];
     fs.mkdirSync(`${siteName}/${sylkDocsPath}/${prjName}/`);
-    fs.mkdirSync(`${siteName}/sylk/${prjName}`);
+    // fs.mkdirSync(`${siteName}/sylk/${prjName}`);
   });
 
   if(json) {
-    fs.copyFileSync(options.json, `${siteName}/sylk/${json.project.name}/sylk.json`);
+    fs.copyFileSync(options.json, `${siteName}/${sylkDocsPath}/${json.project.name}/sylk.json`);
   }
 
   fs.writeFileSync(`${siteName}/docusaurus.config.js`,overrideDocusaurusConfigs(jsonsToServe,sylkDocsPath,sidebarPath,routeBasePath))
@@ -87,7 +93,7 @@ export default async function init(
   fs.copyFileSync(path.resolve(__dirname, 'templates/logo.png'), `${siteName}/static/img/logo.png`);
   fs.copyFileSync(path.resolve(__dirname, 'templates/favicon.ico'), `${siteName}/static/img/favicon.ico`);
   
-  console.log('Generating Sylk doc files for sample fixtures.');
+  console.log('Generating sylk.build doc files for project.');
 
   try {
     execSync(`cd ${siteName} && npx docusaurus generate-sylk-docs`, { stdio: 'inherit' });
@@ -108,14 +114,25 @@ const overrideStyles = () => {
  
  /* You can override the default Infima variables here. */
  :root {
-   --ifm-color-primary: #57E344;
-   --ifm-color-primary-dark: #2AA819;
-   --ifm-color-primary-darker: #238A15;
-   --ifm-color-primary-darkest: #185E0E;
-   --ifm-color-primary-light: #7FEA70;
-   --ifm-color-primary-lighter: #A7F09D;
-   --ifm-color-primary-lightest: #DCF9D8;
+    --ifm-color-primary: #006000;
+    --ifm-color-primary-dark: #005600;
+    --ifm-color-primary-darker: #005200;
+    --ifm-color-primary-darkest: #004300;
+    --ifm-color-primary-light: #006a00;
+    --ifm-color-primary-lighter: #006e00;
+    --ifm-color-primary-lightest: #007d00;
    --ifm-code-font-size: 95%;
+   --ifm-pre-background: #f6f8fa;
+  --ifm-hr-border-color: #E5E5E5;
+  --ifm-background-color: white;
+}
+
+html[data-theme='light'] .sylk-field {
+  color: #204a87;
+}
+
+html[data-theme='dark'] .sylk-field {
+  color: #57E344;
 }
 
 .docusaurus-highlight-code-line {
@@ -126,13 +143,25 @@ const overrideStyles = () => {
 }
 
 html[data-theme='dark'] .docusaurus-highlight-code-line {
-  background-color: #091C2E;
+  background-color: #091C2E
+}
+
+[data-theme='dark'] {
+  --ifm-hr-border-color: #30363D;
+  --ifm-color-primary: #2a74e2;
+  --ifm-color-primary-dark: #1d67d4;
+  --ifm-color-primary-darker: #1b61c9;
+  --ifm-color-primary-darkest: #1650a5;
+  --ifm-color-primary-light: #4283e5;
+  --ifm-color-primary-lighter: #4d8be7;
+  --ifm-color-primary-lightest: #71a2ec;
+  --ifm-background-color: #02040a;
+  --ifm-pre-background: #040B11;
 }
 `
 }
 
 const overrideDocusaurusConfigs = (sylkJsonPaths:string[],sylkDocsPath:string,sidebarPath:string,routeBasePath:string) => {
-  console.log(sylkJsonPaths)
   return `/** @type {import('@docusaurus/types').DocusaurusConfig} */
   module.exports = {
       title: 'Sylk Docs',
@@ -153,8 +182,8 @@ const overrideDocusaurusConfigs = (sylkJsonPaths:string[],sylkDocsPath:string,si
           },
           items: [
             {
-              to: 'sylkdocs/intro',
-              activeBasePath: 'sylkdocs',
+              to: '${routeBasePath}/intro',
+              activeBasePath: '${sylkDocsPath}',
               label: 'Sylk Docs',
               position: 'left',
             },
@@ -224,7 +253,7 @@ const overrideDocusaurusConfigs = (sylkJsonPaths:string[],sylkDocsPath:string,si
           'docusaurus-sylk',
           {
             sylk: {
-              sylkJsonPaths: ['${sylkJsonPaths}'],
+              sylkJsonPaths: ${sylkJsonPaths.length>0 ? `${JSON.stringify(sylkJsonPaths)}` : '[]'},
               sylkDocsPath: '${sylkDocsPath}',
               sidebarPath: '${sidebarPath}'
             },
