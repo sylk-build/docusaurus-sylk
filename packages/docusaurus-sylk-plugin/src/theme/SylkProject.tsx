@@ -72,15 +72,15 @@ export const ProtoServiceMethod = ({ method }: ServiceMethodProps) => (
       <tr>
         <th style={leftHeaderStyles}>Request</th>
         <td>
-          <Link to={method.requestTypeLink}><code>{method.requestType}</code></Link>
-          {method.requestStreaming === true ? ' stream' : ''}
+          <Link to={method.inputType}><code>{method.inputType}</code></Link>
+          {method.clientStreaming === true ? ' stream' : ''}
         </td>
       </tr>
       <tr>
         <th style={leftHeaderStyles}>Response</th>
         <td>
-          <Link to={method.responseTypeLink}><code>{method.responseType}</code></Link>
-          {method.responseStreaming === true ? ' stream' : ''}
+          <Link to={method.outputType}><code>{method.outputType}</code></Link>
+          {method.serverStreaming === true ? ' stream' : ''}
         </td>
       </tr>
       <tr>

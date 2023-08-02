@@ -45,6 +45,10 @@ export interface EnumValue {
   
   export interface ServiceMethod {
     name: string;
+    inputType: string,
+    outputType: string,
+    serverStreaming: boolean,
+    clientStreaming: boolean,
     description: string;
     requestType: string;
     requestLongType: string;
