@@ -93,6 +93,7 @@ var generateDocPackageContents = function (fileDescriptor, inlines) {
     return ("---\ntitle: ".concat((0, utils_1.getVersionFileName)(fileDescriptor.package), "\nhide_title: true\n---\nimport { SylkMessageProto, SylkEnumProto, FileLink } from '@theme/SylkProto/SylkProto';\n\n# `").concat((0, utils_1.getLeafFileName)(fileDescriptor.name), "`\n_**path** ").concat(fileDescriptor.name, "_\n\n_**package** ").concat(fileDescriptor.package, "_\n\n").concat(fileDescriptor.description, "\n\n---\n\n").concat([
         generateMessageSectionMdx(fileDescriptor.messages, fileDescriptor.dependencies),
         generateEnumSectionMdx(__spreadArray(__spreadArray([], fileDescriptor.enums, true), enumInlines, true)),
+        generateServiceSectionMdx(__spreadArray([], fileDescriptor.services, true)),
     ].filter(Boolean).map(function (section) { return section + "\n---\n"; }).join(""), "\n\n  "));
 };
 var generateMessageSectionMdx = function (messages, dependencies) {
