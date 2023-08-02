@@ -127,6 +127,7 @@ title: ${getVersionFileName(fileDescriptor.package)}
 hide_title: true
 ---
 import { SylkMessageProto, SylkEnumProto, FileLink } from '@theme/SylkProto/SylkProto';
+import { ProtoServiceMethod } from '@theme/SylkProject';
 
 # \`${getLeafFileName(fileDescriptor.name)}\`
 _**path** ${fileDescriptor.name}_
@@ -139,9 +140,9 @@ ${fileDescriptor.description}
 
 ${
   [
+    generateServiceSectionMdx([...fileDescriptor.services]),
     generateMessageSectionMdx(fileDescriptor.messages,fileDescriptor.dependencies),
     generateEnumSectionMdx([...fileDescriptor.enums,...enumInlines]),
-    generateServiceSectionMdx([...fileDescriptor.services]),
   ].filter(Boolean).map(section => section + "\n---\n").join("")
 }
 
