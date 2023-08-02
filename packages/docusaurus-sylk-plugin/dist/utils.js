@@ -15,6 +15,6 @@ var getLeafFileName = function (fileName) {
 };
 exports.getLeafFileName = getLeafFileName;
 var getVersionFileName = function (fullName) {
-    return fullName.split('.').pop();
+    return fullName ? fullName.split('.').pop() : fullName;
 };
 exports.getVersionFileName = getVersionFileName;
